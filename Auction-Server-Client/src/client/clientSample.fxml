@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="465.0" prefWidth="885.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controller">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="Connection">
+          <items>
+            <MenuItem fx:id="connectItem" mnemonicParsing="false" text="Connect" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="disconnectItem" mnemonicParsing="false" text="Disconnect" />
+            <SeparatorMenuItem disable="true" mnemonicParsing="false" visible="false" />
+            <MenuItem fx:id="quitItem" mnemonicParsing="false" text="Quit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help                      ">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About MyApp" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <SplitPane dividerPositions="0.24122310305775765" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <items>
+        <AnchorPane prefHeight="415.0" prefWidth="202.0">
+               <children>
+                  <JFXButton fx:id="historyButton" alignment="BASELINE_LEFT" graphicTextGap="8.0" layoutX="22.0" layoutY="168.0" prefHeight="32.0" prefWidth="140.0" text="HISTORY">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="SHOPPING_BAG" size="15.0" wrappingWidth="12.0" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="inventoryButton" alignment="BASELINE_LEFT" graphicTextGap="8.0" layoutX="22.0" layoutY="127.0" prefHeight="32.0" prefWidth="140.0" text="INVENTORY">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="SUITCASE" size="15.0" wrappingWidth="12.0" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="lobbiesButton" alignment="BASELINE_LEFT" graphicTextGap="8.0" layoutX="22.0" layoutY="86.0" prefHeight="32.0" prefWidth="140.0" text="LOBBIES">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="NEWSPAPER_ALT" size="15.0" wrappingWidth="12.0" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="bankButton" alignment="BASELINE_LEFT" graphicTextGap="8.0" layoutX="22.0" layoutY="208.0" prefHeight="32.0" prefWidth="140.0" text="BANK : ">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="BANK" nodeOrientation="LEFT_TO_RIGHT" size="17.0" strokeLineCap="BUTT" strokeType="OUTSIDE" text="" wrappingWidth="19.0" />
+                     </graphic>
+                  </JFXButton>
+                  <Label layoutX="118.0" layoutY="211.0" prefHeight="25.0" prefWidth="23.0" text="0">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+        </AnchorPane>
+        <ScrollPane prefHeight="415.0" prefWidth="471.0">
+               <content>
+                  <FlowPane fx:id="flowPane" />
+               </content>
+        </ScrollPane>
+      </items>
+    </SplitPane>
+    <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+      <children>
+        <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label layoutX="4.0" prefHeight="17.0" prefWidth="82.0" text="User status :" />
+                  <Label fx:id="userStatusLabel" layoutX="72.0" prefHeight="17.0" prefWidth="38.0" text="offline" textFill="#e11e1e" />
+               </children></Pane>
+            <Label prefHeight="17.0" prefWidth="81.0" text="Users online :" />
+            <Label fx:id="usersOnlineLabel" prefHeight="17.0" prefWidth="23.0" text="0" />
+      </children>
+      <padding>
+        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+      </padding>
+    </HBox>
+  </children>
+</VBox>
