@@ -24,6 +24,7 @@
         <Menu mnemonicParsing="false" text="Connection">
           <items>
             <MenuItem fx:id="connectItem" mnemonicParsing="false" text="Connect" />
+                  <MenuItem fx:id="doConnect" mnemonicParsing="false" text="DoConnect" />
             <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="disconnectItem" mnemonicParsing="false" text="Disconnect" />
             <SeparatorMenuItem disable="true" mnemonicParsing="false" visible="false" />

@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.Contoller">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.Contoller">
    <children>
       <TabPane prefHeight="344.0" prefWidth="542.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -17,7 +17,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <SplitPane fx:id="SplitPane" dividerPositions="0.3333333333333333"  prefHeight="313.0" prefWidth="542.0">
+                        <SplitPane fx:id="SplitPane" dividerPositions="0.3333333333333333" prefHeight="313.0" prefWidth="542.0">
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="311.0" prefWidth="212.0">
                                  <children>
@@ -50,11 +50,11 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab id="ServerlLogsTab" fx:id="ServerlLogsTab" text="Server Logs">
+          <Tab id="ServerlLogsTab" fx:id="DataBaseTab" text="DataBase">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="ServerLogsListView" prefHeight="318.0" prefWidth="542.0" />
+                        <ListView fx:id="DataBaseListView" prefHeight="318.0" prefWidth="542.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
