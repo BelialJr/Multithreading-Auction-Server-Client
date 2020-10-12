@@ -6,7 +6,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.function.Consumer;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class UserConnection{
     private boolean hasBennLogedIn = false;
@@ -45,7 +45,7 @@ public class UserConnection{
                     sendStandartDataPackage();
                 }else{
                     send("LOGIN FAILED");
-                    send("DISCONNECT");
+                    //send("DISCONNECT");
                 }
             }//if(str[0].equals())
         }
@@ -63,7 +63,8 @@ public class UserConnection{
     }
     private void initializeUsersOnlineListener() {
         this.usersOnline.addListener(e->{
-            this.sendToAllLogedUsers.accept("USERSONLINE "+usersOnline.getValue());
+            //this.sendToAllLogedUsers.accept("USERSONLINE "+usersOnline.getValue());
+            this.send("USERSONLINE "+usersOnline.getValue());
         });
     }
 
@@ -73,11 +74,13 @@ public class UserConnection{
     public void send(String string){
         if(hasBennLogedIn){
             try {
-                os.write((string+ "\n").getBytes());
-                os.flush();
-                Server.logger.log(Level.FINE,"Message sent to" +  user.toString() + " : " + string);
-            } catch (IOException e) {
-                e.printStackTrace();
+                if(!socket.isClosed()) {
+                    os.write((string + "\n").getBytes());
+                    os.flush();
+                    Server.logger.log(Level.FINE, "Message sent to" + user.toString() + " : " + string);
+                }
+             } catch (IOException ignore) {
+
             }
         }
     }

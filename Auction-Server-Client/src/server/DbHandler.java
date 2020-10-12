@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class DbHandler {
     private  static Connection connection;
@@ -35,6 +35,7 @@ public class DbHandler {
     }
 
     private void addDefaultCardsToUsers() {
+
     }
 
     private void addDefaultCards() {
@@ -75,8 +76,8 @@ public class DbHandler {
             ResultSet resultSet = statement.executeQuery("SELECT * from User");
 
             while (resultSet.next()) {
-                users.add(resultSet.getString("user_ID") + " , " + resultSet.getString("login") + " , "
-                        +resultSet.getString("password") + " , " + resultSet.getString("bank"));
+                users.add("user_ID : " + resultSet.getString("user_ID") + " , " + "login : " +  resultSet.getString("login") + " , "
+                        +"password : " +resultSet.getString("password")+ " , " +"bank  :"  + resultSet.getString("bank"));
             }
 
             return users;

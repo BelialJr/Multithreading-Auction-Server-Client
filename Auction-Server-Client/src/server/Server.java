@@ -2,6 +2,7 @@ package server;
 
 
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.concurrent.Task;
@@ -45,7 +46,7 @@ public class Server {
                     Socket socket = serverSocket.accept();
                     currentToken = _token++;
                     User user = new User(socket.getInetAddress().getHostName(), socket.getPort(), currentToken);
-                    contoller.UsersList.getItems().add(user);
+                    Platform.runLater(()->{contoller.UsersList.getItems().add(user);});
                     logger.log(Level.INFO,user+" joined the server");
                     usersOnline.set(contoller.UsersList.getItems().size());
                     new Thread( () ->{
@@ -57,7 +58,8 @@ public class Server {
                         } catch (NullPointerException |IOException | ClassNotFoundException e) {
                             logger.log(Level.INFO,user +   " : just left the server" );
                             connectionList.remove(connection);
-                            contoller.UsersList.getItems().remove(user);
+                            Platform.runLater(()->{contoller.UsersList.getItems().remove(user);});
+                            logger.log(Level.INFO,"New size" + contoller.UsersList.getItems().size());
                             usersOnline.set(contoller.UsersList.getItems().size());
                         }
                     }).start();
@@ -98,6 +100,13 @@ public class Server {
         this.contoller.setServerStatus("offline");
         try {
             if(!serverSocket.isClosed()) {
+
+                for(UserConnection con:connectionList){
+                    if(con.hasBennLogedIn()) {
+                        con.send("WARNING The server has been stopped");
+                        con.send("DISCONNECT");
+                    }
+                }
                 serverIsStarted = false;
                 this.serverSocket.close();
                 logger.log(Level.INFO, "Server has been stopped");

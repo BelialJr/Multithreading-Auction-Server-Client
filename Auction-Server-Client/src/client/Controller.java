@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.Socket;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -87,9 +88,8 @@ public class Controller {
 
     @FXML
     void initialize() {
-       //initializeOnlineUsersProperty();
-        ConnectedCountListener();
-        initializeDoConnect();
+       ConnectedCountListener();
+       initializeDoConnect();
        initializeConnectItem();
        initializeDisconnectItem();
        connected(false);
@@ -140,7 +140,7 @@ public class Controller {
     private void startReadingInput() {
         new Thread(()->{
             try {
-                while(true) {
+                while(!socket.isClosed()) {
                     String line = bufferedReader.readLine();
                     logger.log(Level.INFO,"SOCKET INPUT : " + line);
                     String[] str = line.split(" ");
@@ -153,6 +153,9 @@ public class Controller {
                         usersOnline.set(str[1]);
                     }if(str[0].equals("DISCONNECT")) {
                         connected(false);
+                    }if(str[0].equals("WARNING")) {
+                       Platform.runLater(() ->
+                       {alertWindow( Arrays.toString(Arrays.copyOfRange(str,1,str.length)) );});
                     }
                 }
             } catch (IOException e) {
@@ -206,12 +209,6 @@ public class Controller {
     });
     }
 
-
-   /* private void initializeOnlineUsersProperty() {
-        usersOnline.addListener(e->{
-            usersOnlineLabel.setText(usersOnline.getValue());
-        });
-    }*/
     private void ConnectedCountListener() {
         AnimationTimer animationTimer=new AnimationTimer() {
             @Override
