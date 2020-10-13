@@ -39,15 +39,22 @@ public class UserConnection{
             String line  = bf.readLine();
             String[] str = line.split(" ");
             Server.logger.log(Level.FINE,"SOCKET INPUT :  " +  user.toString() + " : " + line);
-            if(str[0].equals("LOGIN")){
-                if(checkLoggedIn(str[1],str[2])){
-                    send("LOGIN PASSED");
-                    sendStandartDataPackage();
-                }else{
-                    send("LOGIN FAILED");
-                    //send("DISCONNECT");
+
+            if(!hasBennLogedIn){
+                if(str[0].equals("LOGIN")){
+                    if(checkLoggedIn(str[1],str[2])){
+                        send("LOGIN PASSED");
+                        sendStandartDataPackage();
+                    }else{
+                        send("LOGIN FAILED");
+                        send("WARNING FAILED TO LOG IN");
+                    }
                 }
-            }//if(str[0].equals())
+            }
+            else
+            {
+
+            }
         }
         throw new ClassNotFoundException();
     }
@@ -57,13 +64,22 @@ public class UserConnection{
     }
 
     private boolean checkLoggedIn(String login , String password){
-        hasBennLogedIn = true;
-        Server.logger.log(Level.FINE,   user.toString() + " has been logged in" );
+        if(dbHandler.tryToLogIn(login,password))
+        {
+            hasBennLogedIn = true;
+            Server.logger.log(Level.FINE, user.toString() + " has been logged in");
+        }
+        else
+         {
+            hasBennLogedIn = false;
+            Server.logger.log(Level.FINE, user.toString() + " has not been logged in");
+        }
         return  hasBennLogedIn;
     }
+
     private void initializeUsersOnlineListener() {
         this.usersOnline.addListener(e->{
-            //this.sendToAllLogedUsers.accept("USERSONLINE "+usersOnline.getValue());
+            //this.sendToAllLogedUsers.accept("USERSONLINE "+usersOnline.getValue()); //anyway is binded to every users property
             this.send("USERSONLINE "+usersOnline.getValue());
         });
     }

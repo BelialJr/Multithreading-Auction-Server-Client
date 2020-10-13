@@ -1,4 +1,7 @@
 package server;
+import server.StarWarsAPI.StarWarsApi;
+
+//import javax.smartcardio.Card;
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,22 +29,12 @@ public class DbHandler {
                 createDb();
                 addDefaultUsers();
                 addDefaultCards();
-                addDefaultCardsToUsers();
             }
         } catch (ClassNotFoundException | SQLException e) {
             Server.logger.log(Level.SEVERE,"Failed to connect to database" , e);
         }
 
     }
-
-    private void addDefaultCardsToUsers() {
-
-    }
-
-    private void addDefaultCards() {
-    }
-
-
     public static DbHandler getInstance(){
         if(dbHandler == null){
            dbHandler =  new DbHandler();
@@ -62,7 +55,7 @@ public class DbHandler {
             statement.execute(       "CREATE TABLE Card (\n" +
                     "    card_ID integer NOT NULL PRIMARY KEY,\n" +
                     "    name varchar2  NOT NULL,\n" +
-                    "    user_ID integer  NOT NULL,\n" +
+                    "    user_ID integer  ,\n" +
                     "    FOREIGN KEY (user_ID)  REFERENCES User (user_ID) \n" +
                     ");");
             Server.logger.log(Level.INFO,"Database was successfully generated");
@@ -70,29 +63,19 @@ public class DbHandler {
             Server.logger.log(Level.SEVERE,"Create failed for Database",e);
         }
     }
-    public  List<String> getAllUsers(){
-        try (Statement statement =connection.createStatement()) {
-            List<String> users = new ArrayList<String>();
-            ResultSet resultSet = statement.executeQuery("SELECT * from User");
 
-            while (resultSet.next()) {
-                users.add("user_ID : " + resultSet.getString("user_ID") + " , " + "login : " +  resultSet.getString("login") + " , "
-                        +"password : " +resultSet.getString("password")+ " , " +"bank  :"  + resultSet.getString("bank"));
-            }
-
-            return users;
-
-        } catch (SQLException e) {
-            Server.logger.log(Level.SEVERE,"Failed to get all users from DataBase",e);
-            e.printStackTrace();
-            return Collections.emptyList();
-        }
-    }
 
     private void addDefaultUsers(){
-        for (int i = 1; i < 10 ; i++) {
+        for (int i = 1; i < 11 ; i++) {
             String index = String.valueOf(i);
             addNewUser(index, "user"+index, index, String.valueOf(1000));
+        }
+    }
+    private void addDefaultCards() {
+        DefaultCard defaultCards[] = StarWarsApi.getDefaultCards();
+        for (int i = 0; i < defaultCards.length ; i++) {
+            String index = String.valueOf(i + 1);
+            addNewCard(index,defaultCards[i],defaultCards.length- i );
         }
     }
     private void addNewUser(String id,String login,String password,String bank){
@@ -109,10 +92,64 @@ public class DbHandler {
             e.printStackTrace();
         }
     }
+    private void addNewCard(String id,DefaultCard card,int user_id){
+        try (PreparedStatement statement = connection.prepareStatement(
+                "INSERT INTO Card values(?,?,?)")) {
+            statement.setString(1,id);
+            statement.setString(2,card.getName());
+            statement.setString(3,String.valueOf(user_id));
+            statement.execute();
+            Server.logger.log(Level.INFO,"Card: [ID: "+  id  + " Name: "+ card.getName() +"] was successfully generated");
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed in add new card to DataBase",e);
+            e.printStackTrace();
+        }
+    }
+
+
+    public  List<String> getAllUsers(){
+        try (Statement statement =connection.createStatement()) {
+            List<String> users = new ArrayList<String>();
+            ResultSet resultSet = statement.executeQuery("SELECT * from User");
+            System.out.println("----------------------Users----------------------");
+            while (resultSet.next()) {
+                users.add("user_ID : " + resultSet.getString("user_ID") + " , " + "login : " +  resultSet.getString("login") + " , "
+                        +"password : " +resultSet.getString("password")+ " , " +"bank  :"  + resultSet.getString("bank"));
+            }
+
+            return users;
+
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to get all users from DataBase",e);
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+    public List<String>  getAllCards(){
+        try (Statement statement =connection.createStatement()) {
+            List<String> users = new ArrayList<String>();
+            ResultSet resultSet = statement.executeQuery("SELECT * from Card");
+            System.out.println("----------------------Cards----------------------");
+            while (resultSet.next()) {
+                users.add("card_ID : " + resultSet.getString("card_ID") + " , " + "name : " + resultSet.getString("name")
+                        + " , " + "user_ID : " + resultSet.getString("user_ID"));
+            }
+            return users;
+
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to get all cards from DataBase",e);
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+    public boolean tryToLogIn(String login , String password){
+        return true;
+    }
 
     public static void main(String[] args) {
         DbHandler dbHandler = DbHandler.getInstance();
         dbHandler.getAllUsers().forEach(System.out::println);
+        dbHandler.getAllCards().forEach(System.out::println);
     }
 
 }

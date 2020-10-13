@@ -99,6 +99,7 @@ public class Controller {
     private void initializeDoConnect() {
         doConnect.setOnAction(event -> {
         openSocket();
+        connected(true);
         });
     }
 
@@ -158,8 +159,8 @@ public class Controller {
                        {alertWindow( Arrays.toString(Arrays.copyOfRange(str,1,str.length)) );});
                     }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ignore) {
+
             }
         }).start();
 
@@ -225,6 +226,7 @@ public class Controller {
             setClientStatus("online");
             usersOnline.set("0");
             connectItem.setDisable(true);
+            doConnect.setDisable(true);
             disconnectItem.setDisable(false);
             logger.log(Level.INFO,"User has been connected");
         }else {
@@ -236,6 +238,7 @@ public class Controller {
                 setClientStatus("offline");
                 usersOnline.set("0");
                 connectItem.setDisable(false);
+                doConnect.setDisable(false);
                 disconnectItem.setDisable(true);
             }catch (IOException e1) {
                 alertWindow("Can not disconnect from the server");

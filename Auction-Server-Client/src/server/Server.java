@@ -46,9 +46,13 @@ public class Server {
                     Socket socket = serverSocket.accept();
                     currentToken = _token++;
                     User user = new User(socket.getInetAddress().getHostName(), socket.getPort(), currentToken);
-                    Platform.runLater(()->{contoller.UsersList.getItems().add(user);});
+                    Integer newValue = usersOnline.getValue() + 1;
+                    usersOnline.set(newValue);
+                    Platform.runLater(()->{
+                        contoller.UsersList.getItems().add(user);
+                    });
                     logger.log(Level.INFO,user+" joined the server");
-                    usersOnline.set(contoller.UsersList.getItems().size());
+
                     new Thread( () ->{
                         try {
                             connection = new UserConnection(user,socket,dbHandler,usersOnline,this::sendToAllLogedUsers);
@@ -58,9 +62,12 @@ public class Server {
                         } catch (NullPointerException |IOException | ClassNotFoundException e) {
                             logger.log(Level.INFO,user +   " : just left the server" );
                             connectionList.remove(connection);
-                            Platform.runLater(()->{contoller.UsersList.getItems().remove(user);});
-                            logger.log(Level.INFO,"New size" + contoller.UsersList.getItems().size());
-                            usersOnline.set(contoller.UsersList.getItems().size());
+                            int newVal = usersOnline.getValue() - 1;
+                            usersOnline.set(newVal);
+                            Platform.runLater(()->{
+                                contoller.UsersList.getItems().remove(user);
+                            });
+
                         }
                     }).start();
                 }

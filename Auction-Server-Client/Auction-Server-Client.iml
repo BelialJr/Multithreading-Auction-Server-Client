@@ -10,5 +10,6 @@
     <orderEntry type="library" exported="" name="sqlite-jdbc-3.7.2" level="project" />
     <orderEntry type="library" exported="" name="jfoenix-9.0.10" level="project" />
     <orderEntry type="library" exported="" name="fontawesomefx-commons-9.1.2" level="project" />
+    <orderEntry type="library" name="httpcore-4.4.11" level="project" />
   </component>
 </module>

@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="httpcore-4.4.11">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/JsonLib/httpcore-4.4.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/JsonLib/junit-4.13-beta-3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/JsonLib/httpclient-4.5.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/JsonLib/hamcrest-core-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/JsonLib/gson-2.8.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/JsonLib/commons-logging-1.2.jar!/" />
+      <root url="file://$PROJECT_DIR$" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/src" />
+    </SOURCES>
+  </library>
+</component>
