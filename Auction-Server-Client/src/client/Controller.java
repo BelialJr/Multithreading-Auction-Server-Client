@@ -43,7 +43,7 @@ public class Controller {
     private URL location;
 
     @FXML
-    private MenuItem connectItem;
+    private MenuItem logInItem;
 
     @FXML
     private MenuItem doConnect;
@@ -77,8 +77,8 @@ public class Controller {
 
     private static final Logger logger = Logger.getLogger(Server.class.getName());
     private SimpleStringProperty usersOnline = new SimpleStringProperty();
-    private String login;
-    private String password;
+    public static  String login = "$";
+    public static  String password = "$";
     private final int  port = 3440 ;
     private Socket socket;
     private InputStream inputStream;
@@ -104,7 +104,7 @@ public class Controller {
     }
 
     private void initializeConnectItem() {
-        connectItem.setOnAction(e-> {
+        logInItem.setOnAction(e-> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInFXML/logInSample.fxml"));
                 Parent root = loader.load();
@@ -120,12 +120,14 @@ public class Controller {
 
     @FXML
     public void transferLogData(String login,String password){
-        this.login = login;
-        this.password = password;
+        if(login!=null)this.login = login;
+        if(password!=null)this.password = password;
+        System.out.println(this.login + " transfer data = " + this.password);
     }
 
     private void openSocket() {
         try {
+            System.out.println(this.login + " socket = " + this.password);
             this.socket = new Socket("localhost", port);
             this.inputStream = socket.getInputStream();
             this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -156,7 +158,13 @@ public class Controller {
                         connected(false);
                     }if(str[0].equals("WARNING")) {
                        Platform.runLater(() ->
-                       {alertWindow( Arrays.toString(Arrays.copyOfRange(str,1,str.length)) );});
+                       {
+                           StringBuilder sb = new StringBuilder();
+                           for (int i = 1; i <str.length ; i++) { //Arrays.toString( Arrays.copyOfRange(str,1,str.length));
+                               sb.append(str[i] + " ");
+                           }
+                           alertWindow( sb.toString());
+                       });
                     }
                 }
             } catch (IOException ignore) {
@@ -168,7 +176,9 @@ public class Controller {
     }
 
     private void logIN() {
-        sendToServer("LOGIN "+login + " " + password);
+        String data = "LOGIN " +this.login + " " + this.password;
+        System.out.println(data);
+        sendToServer("LOGIN " +this.login + " " + this.password);
     }
 
     private void initializeDisconnectItem(){
@@ -225,7 +235,7 @@ public class Controller {
        if(b){
             setClientStatus("online");
             usersOnline.set("0");
-            connectItem.setDisable(true);
+            logInItem.setDisable(true);
             doConnect.setDisable(true);
             disconnectItem.setDisable(false);
             logger.log(Level.INFO,"User has been connected");
@@ -237,7 +247,7 @@ public class Controller {
                 }
                 setClientStatus("offline");
                 usersOnline.set("0");
-                connectItem.setDisable(false);
+                logInItem.setDisable(false);
                 doConnect.setDisable(false);
                 disconnectItem.setDisable(true);
             }catch (IOException e1) {

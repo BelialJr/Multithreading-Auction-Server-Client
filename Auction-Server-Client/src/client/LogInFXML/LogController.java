@@ -35,7 +35,12 @@ public class LogController {
             Controller controller = loader.getController();
             Stage stage = (Stage) logInButton.getScene().getWindow();
             stage.close();
-            controller.transferLogData(LoginField.getText(), PasswordField.getText());
+            String login = "$";
+            String passw = "$";
+
+            if(LoginField.getText() != null) {login = LoginField.getText();  controller.login = LoginField.getText();}
+            if(PasswordField.getText()!= null){ passw = PasswordField.getText();controller.password = PasswordField.getText();}
+            controller.transferLogData(login, passw);
 
             } catch (IOException e) {
                 e.printStackTrace();

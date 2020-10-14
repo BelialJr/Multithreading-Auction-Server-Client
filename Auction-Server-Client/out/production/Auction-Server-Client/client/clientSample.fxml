@@ -23,7 +23,7 @@
       <menus>
         <Menu mnemonicParsing="false" text="Connection">
           <items>
-            <MenuItem fx:id="connectItem" mnemonicParsing="false" text="Connect" />
+            <MenuItem fx:id="logInItem" mnemonicParsing="false" text="LogIn" />
                   <MenuItem fx:id="doConnect" mnemonicParsing="false" text="DoConnect" />
             <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="disconnectItem" mnemonicParsing="false" text="Disconnect" />

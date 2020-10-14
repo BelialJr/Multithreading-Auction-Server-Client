@@ -142,14 +142,30 @@ public class DbHandler {
             return Collections.emptyList();
         }
     }
+
     public boolean tryToLogIn(String login , String password){
-        return true;
+        try (Statement statement =connection.createStatement()) {
+            List<String> users = new ArrayList<String>();
+            String query = String.format("SELECT * from User WHERE LOGIN = \"%s\" AND PASSWORD = \"%s\"",login,password);
+            ResultSet resultSet = statement.executeQuery(query);
+            if(resultSet.next()){
+                System.out.println(resultSet.getString("login"));
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to log user",e);
+            e.printStackTrace();
+            return false;
+        }
     }
+
 
     public static void main(String[] args) {
         DbHandler dbHandler = DbHandler.getInstance();
         dbHandler.getAllUsers().forEach(System.out::println);
         dbHandler.getAllCards().forEach(System.out::println);
+
     }
 
 }

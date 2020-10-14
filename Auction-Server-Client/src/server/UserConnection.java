@@ -46,8 +46,8 @@ public class UserConnection{
                         send("LOGIN PASSED");
                         sendStandartDataPackage();
                     }else{
+                        send("WARNING Failed to log in");
                         send("LOGIN FAILED");
-                        send("WARNING FAILED TO LOG IN");
                     }
                 }
             }
@@ -67,12 +67,12 @@ public class UserConnection{
         if(dbHandler.tryToLogIn(login,password))
         {
             hasBennLogedIn = true;
-            Server.logger.log(Level.FINE, user.toString() + " has been logged in");
+            Server.logger.log(Level.INFO, user.toString() + " has been logged in");
         }
         else
          {
             hasBennLogedIn = false;
-            Server.logger.log(Level.FINE, user.toString() + " has not been logged in");
+            Server.logger.log(Level.INFO, user.toString() + " has not been logged in");
         }
         return  hasBennLogedIn;
     }
@@ -88,7 +88,6 @@ public class UserConnection{
         return hasBennLogedIn;
     }
     public void send(String string){
-        if(hasBennLogedIn){
             try {
                 if(!socket.isClosed()) {
                     os.write((string + "\n").getBytes());
@@ -98,6 +97,7 @@ public class UserConnection{
              } catch (IOException ignore) {
 
             }
-        }
+
     }
+
 }
