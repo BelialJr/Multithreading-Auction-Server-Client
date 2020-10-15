@@ -1,12 +1,11 @@
 package server;
+import server.StarWarsAPI.CardsLoader;
 import server.StarWarsAPI.StarWarsApi;
 
 //import javax.smartcardio.Card;
 import java.io.File;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 
 
@@ -55,6 +54,10 @@ public class DbHandler {
             statement.execute(       "CREATE TABLE Card (\n" +
                     "    card_ID integer NOT NULL PRIMARY KEY,\n" +
                     "    name varchar2  NOT NULL,\n" +
+                    "    height varchar2  NOT NULL,\n" +
+                    "    skin_color varchar2  NOT NULL,\n" +
+                    "    birth_year varchar2  NOT NULL,\n" +
+                    "    gender varchar2  NOT NULL,\n" +
                     "    user_ID integer  ,\n" +
                     "    FOREIGN KEY (user_ID)  REFERENCES User (user_ID) \n" +
                     ");");
@@ -94,10 +97,14 @@ public class DbHandler {
     }
     private void addNewCard(String id,DefaultCard card,int user_id){
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO Card values(?,?,?)")) {
+                "INSERT INTO Card values(?,?,?,?,?,?,?)")) {
             statement.setString(1,id);
             statement.setString(2,card.getName());
-            statement.setString(3,String.valueOf(user_id));
+            statement.setString(3,card.getHeight());
+            statement.setString(4,card.getSkin_color());
+            statement.setString(5,card.getBirth_year());
+            statement.setString(6,card.getGender());
+            statement.setString(7,String.valueOf(user_id));
             statement.execute();
             Server.logger.log(Level.INFO,"Card: [ID: "+  id  + " Name: "+ card.getName() +"] was successfully generated");
         } catch (SQLException e) {
@@ -132,6 +139,10 @@ public class DbHandler {
             System.out.println("----------------------Cards----------------------");
             while (resultSet.next()) {
                 users.add("card_ID : " + resultSet.getString("card_ID") + " , " + "name : " + resultSet.getString("name")
+                        + " , " + "height : " + resultSet.getString("height")
+                        + " , " + "skin_color : " + resultSet.getString("skin_color")
+                        + " , " + "birth_year : " + resultSet.getString("birth_year")
+                        + " , " + "gender : " + resultSet.getString("gender")
                         + " , " + "user_ID : " + resultSet.getString("user_ID"));
             }
             return users;
@@ -145,11 +156,9 @@ public class DbHandler {
 
     public boolean tryToLogIn(String login , String password){
         try (Statement statement =connection.createStatement()) {
-            List<String> users = new ArrayList<String>();
             String query = String.format("SELECT * from User WHERE LOGIN = \"%s\" AND PASSWORD = \"%s\"",login,password);
             ResultSet resultSet = statement.executeQuery(query);
             if(resultSet.next()){
-                System.out.println(resultSet.getString("login"));
                 return true;
             }
             return false;
@@ -161,6 +170,7 @@ public class DbHandler {
     }
 
 
+
     public static void main(String[] args) {
         DbHandler dbHandler = DbHandler.getInstance();
         dbHandler.getAllUsers().forEach(System.out::println);
@@ -168,4 +178,49 @@ public class DbHandler {
 
     }
 
+    public String getUserBank(String login) {
+        try (Statement statement =connection.createStatement()) {
+            String query = String.format("SELECT * from User WHERE LOGIN = \"%s\" ",login);
+            ResultSet resultSet = statement.executeQuery(query);
+            if(resultSet.next()){
+                return resultSet.getString("bank");
+            }
+            return "0";
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to get user bank",e);
+            e.printStackTrace();
+            return "0";
+        }
+    }
+
+    public Map<Integer,DefaultCard> getUserInventory(String login) {
+        Map<Integer,DefaultCard> resultInvenory= new HashMap<>();
+        try (Statement statement =connection.createStatement()) {
+            String query = String.format("SELECT * from User WHERE LOGIN = \"%s\" ",login);
+            ResultSet resultSet1 = statement.executeQuery(query);
+            String user_ID = null;
+            if(resultSet1.next())
+            {
+              user_ID =  resultSet1.getString("user_ID");
+            }
+            ResultSet resultSet2 = statement.executeQuery(String.format("SELECT * from CARD WHERE  USER_ID =\"%s\"  ",user_ID));
+            if(resultSet2.next())
+            {
+                Integer cardID = Integer.parseInt(resultSet2.getString("card_ID"));
+                DefaultCard defaultCard =  new DefaultCard(resultSet2.getString("name"),
+                        resultSet2.getString("height"),
+                        resultSet2.getString("skin_color"),
+                        resultSet2.getString("birth_year"),
+                        resultSet2.getString("gender"));
+                resultInvenory.put(cardID,defaultCard);
+
+            }
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to get user inventory",e);
+            e.printStackTrace();
+            return Collections.EMPTY_MAP;
+        }
+        return  resultInvenory;
+
+    }
 }

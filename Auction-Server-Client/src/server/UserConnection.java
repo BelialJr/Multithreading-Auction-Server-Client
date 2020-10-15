@@ -1,9 +1,12 @@
 package server;
 
+
 import javafx.beans.property.SimpleIntegerProperty;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
@@ -17,7 +20,8 @@ public class UserConnection{
     private DbHandler dbHandler;
     private User user;
     SimpleIntegerProperty usersOnline = new SimpleIntegerProperty(0);
-
+    private String login;
+    private String password;
 
 
     public UserConnection( User user , Socket socket,  DbHandler dbHandler,SimpleIntegerProperty usersOnline,Consumer<String> sendToAllLogedUsers) throws IOException {
@@ -43,6 +47,8 @@ public class UserConnection{
             if(!hasBennLogedIn){
                 if(str[0].equals("LOGIN")){
                     if(checkLoggedIn(str[1],str[2])){
+                        login = str[1];
+                        password = str[2];
                         send("LOGIN PASSED");
                         sendStandartDataPackage();
                     }else{
@@ -61,6 +67,26 @@ public class UserConnection{
 
     private void sendStandartDataPackage(){
         send("USERSONLINE "+usersOnline.getValue());
+        sendBank();
+        sendInventory();
+        sendLobbies();
+    }
+
+    private void sendBank() {
+          String  result = dbHandler.getUserBank(this.login);
+          send("BANK " + result);
+    }
+
+    private void sendLobbies() {
+        send("LOBBIES " );
+    }
+
+    private void sendInventory() {
+        Map<Integer,DefaultCard> inventory =  dbHandler.getUserInventory(this.login); // INVENTORY id::"Obi-Wan Kenobi","182","fair","57BBY","male"#...
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("INVENTORY ");
+        inventory.forEach((key,card)->{stringBuilder.append(key+"::"+card.toStringV2()+ "#");});
+        send(stringBuilder.toString());
     }
 
     private boolean checkLoggedIn(String login , String password){

@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="465.0" prefWidth="885.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controller">
+<VBox prefHeight="465.0" prefWidth="885.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controller">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -74,7 +74,7 @@
                         <FontAwesomeIconView glyphName="BANK" nodeOrientation="LEFT_TO_RIGHT" size="17.0" strokeLineCap="BUTT" strokeType="OUTSIDE" text="" wrappingWidth="19.0" />
                      </graphic>
                   </JFXButton>
-                  <Label layoutX="118.0" layoutY="211.0" prefHeight="25.0" prefWidth="23.0" text="0">
+                  <Label fx:id="bankLabel" layoutX="118.0" layoutY="211.0" prefHeight="26.0" prefWidth="45.0" text="0">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -83,7 +83,10 @@
         </AnchorPane>
         <ScrollPane prefHeight="415.0" prefWidth="471.0">
                <content>
-                  <FlowPane fx:id="flowPane" />
+                  <FlowPane fx:id="flowPane" hgap="17.0" prefHeight="410.0" prefWidth="658.0" vgap="20.0">
+                     <padding>
+                        <Insets left="15.0" top="15.0" />
+                     </padding></FlowPane>
                </content>
         </ScrollPane>
       </items>

@@ -1,25 +1,19 @@
 package client;
 
 
-import client.LogInFXML.LogController;
+
 import com.jfoenix.controls.JFXButton;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,15 +23,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import server.DefaultCard;
 import server.Server;
-import server.User;
 
 public class Controller {
 
     @FXML
     private ResourceBundle resources;
+
+    @FXML
+    private Label bankLabel;
 
     @FXML
     private URL location;
@@ -84,16 +80,28 @@ public class Controller {
     private InputStream inputStream;
     BufferedReader bufferedReader ;
     private OutputStream outputStream;
-
+    private Map<Integer, DefaultCard > userCardsInventory = new HashMap<>();
 
     @FXML
     void initialize() {
-       ConnectedCountListener();
+       connectedCountListener();
        initializeDoConnect();
+       initializeInventoryButton();
        initializeConnectItem();
        initializeDisconnectItem();
        connected(false);
 
+    }
+
+    private void initializeInventoryButton(){
+            inventoryButton.setOnAction(e -> generateInventory());
+    }
+
+    private void generateInventory(){
+     //   flowPane.getChildren().clear();
+        List<CardInvenotryButton> allCards = new ArrayList<>();
+        userCardsInventory.forEach((k,v)->{ allCards.add(new CardInvenotryButton(k,v)); });
+        Platform.runLater(() ->{  flowPane.getChildren().addAll(allCards);});
     }
 
     private void initializeDoConnect() {
@@ -118,16 +126,15 @@ public class Controller {
         });
     }
 
-    @FXML
+   /* @FXML
     public void transferLogData(String login,String password){
         if(login!=null)this.login = login;
         if(password!=null)this.password = password;
         System.out.println(this.login + " transfer data = " + this.password);
-    }
+    }*/
 
     private void openSocket() {
         try {
-            System.out.println(this.login + " socket = " + this.password);
             this.socket = new Socket("localhost", port);
             this.inputStream = socket.getInputStream();
             this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -147,24 +154,46 @@ public class Controller {
                     String line = bufferedReader.readLine();
                     logger.log(Level.INFO,"SOCKET INPUT : " + line);
                     String[] str = line.split(" ");
+
                     if (str[0].equals("LOGIN")) {
                         if(str[1].equals("PASSED"))
-                            connected(true);
+                            Platform.runLater(() -> {connected(true);});
                         if(str[1].equals("FAILED"))
-                             connected(false);
-                    }if(str[0].equals("USERSONLINE")) {
-                        usersOnline.set(str[1]);
-                    }if(str[0].equals("DISCONNECT")) {
-                        connected(false);
-                    }if(str[0].equals("WARNING")) {
-                       Platform.runLater(() ->
-                       {
+                            Platform.runLater(() -> {connected(false);});
+                     }
+
+                    if(str[0].equals("INVENTORY")) {
+                         line = line.substring(10);
+                         List<String> cardsList = Arrays.asList( line.split("#"));
+                         for(String cardStr :cardsList){
+                             Integer cardID = Integer.parseInt(cardStr.split("::")[0]);
+                             userCardsInventory.put(cardID,DefaultCard.castToCard(cardStr.split("::")[1]));
+                         }
+                    }
+
+                    if(str[0].equals("LOBBIES")) {
+
+                    }
+
+                    if(str[0].equals("USERSONLINE")) {
+                        Platform.runLater(() -> {usersOnline.set(str[1]);});
+                    }
+
+                    if(str[0].equals("BANK")) {
+                        Platform.runLater(() -> {bankLabel.setText(str[1]);});
+                    }
+
+                    if(str[0].equals("DISCONNECT")) {
+                        Platform.runLater(() -> {connected(false);});
+                    }
+
+                    if(str[0].equals("WARNING")) {
+                       Platform.runLater(() -> {
                            StringBuilder sb = new StringBuilder();
-                           for (int i = 1; i <str.length ; i++) { //Arrays.toString( Arrays.copyOfRange(str,1,str.length));
+                           for (int i = 1; i <str.length ; i++) {
                                sb.append(str[i] + " ");
                            }
-                           alertWindow( sb.toString());
-                       });
+                           alertWindow( sb.toString()); });
                     }
                 }
             } catch (IOException ignore) {
@@ -176,8 +205,6 @@ public class Controller {
     }
 
     private void logIN() {
-        String data = "LOGIN " +this.login + " " + this.password;
-        System.out.println(data);
         sendToServer("LOGIN " +this.login + " " + this.password);
     }
 
@@ -213,14 +240,13 @@ public class Controller {
             userStatusLabel.setTextFill(Color.RED);
             userStatusLabel.setText("offline");
         }else if(str.equals("online")){
-
             userStatusLabel.setText("online");
             userStatusLabel.setTextFill(Color.GREEN);
         }
     });
     }
 
-    private void ConnectedCountListener() {
+    private void connectedCountListener() {
         AnimationTimer animationTimer=new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -246,10 +272,13 @@ public class Controller {
                     logger.log(Level.INFO,"User has been disconnected");
                 }
                 setClientStatus("offline");
+                //Platform.runLater(() -> {bankLabel.setText("0");});
+                bankLabel.setText("0");
                 usersOnline.set("0");
                 logInItem.setDisable(false);
                 doConnect.setDisable(false);
                 disconnectItem.setDisable(true);
+
             }catch (IOException e1) {
                 alertWindow("Can not disconnect from the server");
             }

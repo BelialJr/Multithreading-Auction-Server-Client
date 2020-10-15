@@ -82,7 +82,6 @@ public class Server {
                     }
                 }
             }
-
         };
         new Thread(task).start();
     }

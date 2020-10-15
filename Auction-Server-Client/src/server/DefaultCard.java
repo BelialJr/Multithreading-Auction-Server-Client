@@ -2,6 +2,8 @@ package server;
 
 import com.google.gson.JsonElement;
 
+import java.util.Arrays;
+
 public class DefaultCard {
     private String name ;
     private String height ;
@@ -66,5 +68,24 @@ public class DefaultCard {
                 ", birth_year='" + birth_year + '\'' +
                 ", gender='" + gender + '\'' +
                 '}';
+    }
+
+    public String toStringV2() {
+        return
+                name +  "," +
+                height + "," +
+                skin_color +  "," +
+                birth_year +  "," +
+                gender ;
+
+    }
+    public static DefaultCard castToCard(String s){
+        String[] data = s.split(",");
+        System.out.println(s);
+        System.out.println(Arrays.toString(data));
+        DefaultCard result = new DefaultCard(
+                data[0],data[1],data[2],data[3],data[4]
+        );
+        return result;
     }
 }
