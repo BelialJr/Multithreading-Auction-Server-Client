@@ -1,6 +1,5 @@
 package server;
-import server.StarWarsAPI.CardsLoader;
-import server.StarWarsAPI.StarWarsApi;
+import server.StarWarsAPI.StarWarsApiV2;
 
 //import javax.smartcardio.Card;
 import java.io.File;
@@ -75,10 +74,10 @@ public class DbHandler {
         }
     }
     private void addDefaultCards() {
-        DefaultCard defaultCards[] = StarWarsApi.getDefaultCards();
+        DefaultCard defaultCards[] = StarWarsApiV2.getDefaultCards(80);
         for (int i = 0; i < defaultCards.length ; i++) {
             String index = String.valueOf(i + 1);
-            addNewCard(index,defaultCards[i],defaultCards.length- i );
+            addNewCard(index,defaultCards[i],((i%10)+1));
         }
     }
     private void addNewUser(String id,String login,String password,String bank){
@@ -108,7 +107,7 @@ public class DbHandler {
             statement.execute();
             Server.logger.log(Level.INFO,"Card: [ID: "+  id  + " Name: "+ card.getName() +"] was successfully generated");
         } catch (SQLException e) {
-            Server.logger.log(Level.SEVERE,"Failed in add new card to DataBase",e);
+            Server.logger.log(Level.SEVERE,"Failed in add new card to DataBase " + card.toStringV2(),e);
             e.printStackTrace();
         }
     }
@@ -204,7 +203,7 @@ public class DbHandler {
               user_ID =  resultSet1.getString("user_ID");
             }
             ResultSet resultSet2 = statement.executeQuery(String.format("SELECT * from CARD WHERE  USER_ID =\"%s\"  ",user_ID));
-            if(resultSet2.next())
+            while(resultSet2.next())
             {
                 Integer cardID = Integer.parseInt(resultSet2.getString("card_ID"));
                 DefaultCard defaultCard =  new DefaultCard(resultSet2.getString("name"),
@@ -223,4 +222,21 @@ public class DbHandler {
         return  resultInvenory;
 
     }
+
+
+    public String getUserId(String login) {
+        try (Statement statement = connection.createStatement()) {
+            String query = String.format("SELECT * from User WHERE LOGIN = \"%s\" ", login);
+            ResultSet resultSet1 = statement.executeQuery(query);
+            String user_ID = null;
+            if (resultSet1.next()) {
+                user_ID = resultSet1.getString("user_ID");
+            }
+            return user_ID;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "0";
+        }
+    }
+
 }

@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="465.0" prefWidth="885.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controller">
+<VBox prefHeight="465.0" prefWidth="904.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controller">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -81,11 +81,11 @@
                   </Label>
                </children>
         </AnchorPane>
-        <ScrollPane prefHeight="415.0" prefWidth="471.0">
+        <ScrollPane prefHeight="414.0" prefWidth="737.0">
                <content>
-                  <FlowPane fx:id="flowPane" hgap="17.0" prefHeight="410.0" prefWidth="658.0" vgap="20.0">
+                  <FlowPane fx:id="flowPane" hgap="17.0" prefHeight="410.0" prefWidth="669.0" vgap="20.0">
                      <padding>
-                        <Insets left="15.0" top="15.0" />
+                        <Insets left="15.0" top="17.0" />
                      </padding></FlowPane>
                </content>
         </ScrollPane>

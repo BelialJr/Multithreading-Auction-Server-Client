@@ -22,6 +22,7 @@ public class UserConnection{
     SimpleIntegerProperty usersOnline = new SimpleIntegerProperty(0);
     private String login;
     private String password;
+    private String userID; //DB user ID
 
 
     public UserConnection( User user , Socket socket,  DbHandler dbHandler,SimpleIntegerProperty usersOnline,Consumer<String> sendToAllLogedUsers) throws IOException {
@@ -49,6 +50,7 @@ public class UserConnection{
                     if(checkLoggedIn(str[1],str[2])){
                         login = str[1];
                         password = str[2];
+                        this.userID = dbHandler.getUserId(login);
                         send("LOGIN PASSED");
                         sendStandartDataPackage();
                     }else{
@@ -70,6 +72,7 @@ public class UserConnection{
         sendBank();
         sendInventory();
         sendLobbies();
+        send("STANDART_PACKET_END");
     }
 
     private void sendBank() {

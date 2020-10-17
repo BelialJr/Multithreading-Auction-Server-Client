@@ -2,6 +2,7 @@ package client;
 
 
 
+import client.SellCardFXML.SellCardContoller;
 import com.jfoenix.controls.JFXButton;
 
 import java.io.*;
@@ -12,8 +13,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,8 +27,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import server.DefaultCard;
 import server.Server;
 
@@ -77,16 +85,19 @@ public class Controller {
     public static  String password = "$";
     private final int  port = 3440 ;
     private Socket socket;
+    private boolean isConnected;
     private InputStream inputStream;
     BufferedReader bufferedReader ;
     private OutputStream outputStream;
     private Map<Integer, DefaultCard > userCardsInventory = new HashMap<>();
+    Timeline cardAddAnimation = new Timeline();
 
     @FXML
     void initialize() {
        connectedCountListener();
        initializeDoConnect();
        initializeInventoryButton();
+       initializeLobbyButton();
        initializeConnectItem();
        initializeDisconnectItem();
        connected(false);
@@ -96,12 +107,54 @@ public class Controller {
     private void initializeInventoryButton(){
             inventoryButton.setOnAction(e -> generateInventory());
     }
+    private void initializeLobbyButton(){
+            lobbiesButton.setOnAction(e -> generateLobby());
+    }
+
+    private void generateLobby() {
+        if (this.isConnected) {
+            this.cardAddAnimation.stop();
+            flowPane.getChildren().clear();
+        }
+    }
 
     private void generateInventory(){
-     //   flowPane.getChildren().clear();
-        List<CardInvenotryButton> allCards = new ArrayList<>();
-        userCardsInventory.forEach((k,v)->{ allCards.add(new CardInvenotryButton(k,v)); });
-        Platform.runLater(() ->{  flowPane.getChildren().addAll(allCards);});
+        if (this.isConnected) {
+            this.cardAddAnimation.stop();
+            flowPane.getChildren().clear();
+            List<CardInvenotryButton> allCards = new ArrayList<>();
+            userCardsInventory.forEach((k, v) -> {
+                CardInvenotryButton cardInvenotryButton = new CardInvenotryButton(k, v);
+                cardInvenotryButton.setOnAction(e->{invokeCardSelling(cardInvenotryButton);});
+                allCards.add(cardInvenotryButton);
+            });
+                this.cardAddAnimation = new Timeline(new KeyFrame(Duration.seconds(0.1), new EventHandler<ActionEvent>() {
+                int i = 0;
+                @Override
+                public void handle(ActionEvent event) {
+                    flowPane.getChildren().add(allCards.get(i++));
+                }
+            }));
+            this.cardAddAnimation.setCycleCount(allCards.size());
+            this.cardAddAnimation.play();
+        }
+    }
+
+    private void invokeCardSelling(CardInvenotryButton cardInvenotryButton) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("SellCardFXML/SellCard.fxml"));
+            SellCardContoller controller = new SellCardContoller();
+            loader.setController(controller);
+            Parent hbox = loader.load();
+            Scene scene = new Scene(hbox, 514, 317);
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.setScene(scene);
+            controller.setData(cardInvenotryButton);
+            stage.show();
+        }catch (IOException ignore) {
+
+        }
     }
 
     private void initializeDoConnect() {
@@ -115,13 +168,15 @@ public class Controller {
         logInItem.setOnAction(e-> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInFXML/logInSample.fxml"));
+                Controller controller = loader.getController();
                 Parent root = loader.load();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Log in");
                 stage.show();
-            }catch (IOException ex) {
-              ex.printStackTrace();
+
+            }catch (IOException ignore) {
+
             }
         });
     }
@@ -173,6 +228,11 @@ public class Controller {
 
                     if(str[0].equals("LOBBIES")) {
 
+                    }
+
+                    if(str[0].equals("STANDART_PACKET_END")) {
+                        Platform.runLater(() -> { generateInventory();});
+                      //  Platform.runLater(() -> { generateLobby();});
                     }
 
                     if(str[0].equals("USERSONLINE")) {
@@ -259,6 +319,7 @@ public class Controller {
 
     private void connected(boolean b){
        if(b){
+            this.isConnected = true;
             setClientStatus("online");
             usersOnline.set("0");
             logInItem.setDisable(true);
@@ -266,6 +327,9 @@ public class Controller {
             disconnectItem.setDisable(false);
             logger.log(Level.INFO,"User has been connected");
         }else {
+           this.isConnected = false;
+           this.cardAddAnimation.stop();
+           this.flowPane.getChildren().clear();
             try {
                 if(socket != null && (!socket.isClosed())) {
                     socket.close();
