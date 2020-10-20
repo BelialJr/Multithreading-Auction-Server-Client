@@ -81,7 +81,7 @@
                   </Label>
                </children>
         </AnchorPane>
-        <ScrollPane prefHeight="414.0" prefWidth="737.0">
+        <ScrollPane fx:id="ScrollPane" prefHeight="414.0" prefWidth="737.0">
                <content>
                   <FlowPane fx:id="flowPane" hgap="17.0" prefHeight="410.0" prefWidth="669.0" vgap="20.0">
                      <padding>

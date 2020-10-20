@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.concurrent.Task;
+import server.Lobbie.LobbiesHandler;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -30,7 +31,7 @@ public class Server {
     private static int  _token = 1;
     private static int currentToken ;
     private UserConnection connection;
-
+    private LobbiesHandler lobbiesHandler = LobbiesHandler.getInstance();
     public Server() {
         this.dbHandler = DbHandler.getInstance();
     }
@@ -55,11 +56,12 @@ public class Server {
 
                     new Thread( () ->{
                         try {
-                            connection = new UserConnection(user,socket,dbHandler,usersOnline,this::sendToAllLogedUsers);
+                            connection = new UserConnection(user,socket,dbHandler,usersOnline,lobbiesHandler,this::sendToAllLogedUsers);
                             connectionList.add(connection);
                             connection.startReading();
 
                         } catch (NullPointerException |IOException | ClassNotFoundException e) {
+                            lobbiesHandler.removeUserConnection(connection);
                             logger.log(Level.INFO,user +   " : just left the server" );
                             connectionList.remove(connection);
                             int newVal = usersOnline.getValue() - 1;

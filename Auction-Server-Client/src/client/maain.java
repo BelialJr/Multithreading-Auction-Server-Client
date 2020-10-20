@@ -1,15 +1,32 @@
 package client;
 
+import client.UxCardButtons.CardInvenotryButton;
+import client.UxCardButtons.LobbyButton;
+import com.jfoenix.controls.JFXTimePicker;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import server.DefaultCard;
+
+import java.awt.*;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 
-    public class maain extends Application {
+public class maain extends Application {
 
         @Override public void start(Stage stage) {
             stage.setTitle("Line Chart Sample");
@@ -67,19 +84,74 @@ import javafx.stage.Stage;
             series3.getData().add(new XYChart.Data("Nov", 45));
             series3.getData().add(new XYChart.Data("Dec", 44));
 
-            Scene scene  = new Scene(lineChart,800,600);
-            lineChart.getData().addAll(series1, series2, series3);
+            //Scene scene  = new Scene(lineChart,800,600);
+            //lineChart.getData().addAll(series1, series2, series3);
+            FlowPane flowPane =  new FlowPane();
+            JFXTimePicker timePicker = new JFXTimePicker();
+            JFXTimePicker jfxTimePicker = new JFXTimePicker();
+
+          DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+            System.out.println(LocalTime.now().format(dtf));
+            //JFXTimePickerContent jfxTimePickerContent;
+
+           // Test test = new Test(new JFXTimePicker());
+
+
+
+
+
+            FlowPane flowPane1 = new FlowPane();
+            flowPane.setVgap(50);
+            Scene scene = new Scene(flowPane1,800,800);
+            CardInvenotryButton cardInvenotryButton1 = new CardInvenotryButton(2,new DefaultCard("name","name","name","name","name"));
+            CardInvenotryButton cardInvenotryButton2 = new CardInvenotryButton(2,new DefaultCard("name","name","name","name","name"));
+            CardInvenotryButton cardInvenotryButton3 = new CardInvenotryButton(2,new DefaultCard("name","name","name","name","name"));
+            CardInvenotryButton cardInvenotryButton4 = new CardInvenotryButton(2,new DefaultCard("name","name","name","name","name"));
+
+      /*      set(cardInvenotryButton1);
+            set(cardInvenotryButton2);
+            set(cardInvenotryButton3);
+            set(cardInvenotryButton4);
+            ;*/
+            flowPane1.getChildren().addAll(cardInvenotryButton1,cardInvenotryButton2,cardInvenotryButton3,cardInvenotryButton4);
+
+
 
             stage.setScene(scene);
             stage.show();
         }
 
 
-        public static void main(String[] args) {
-            launch(args);
-            if(1 == 1) System.out.println("c");
-            else
-            if(2 == 2)System.out.println("cj");
-          }
+    public  static void deleteButtonFromPane(Class<?> lobbyButtonClass) {
+            if(CardInvenotryButton.class == (lobbyButtonClass)){
+                System.out.println("CARD");
+            } if(LobbyButton.class ==(lobbyButtonClass)){
+            System.out.println("LOBBY");
+        }
+
     }
+
+
+
+    public static void main(String[] args) {
+            launch(args);
+
+          }
+    public class A{
+        int i = 5;
+        A(){}
+    }
+    public class B{
+       A aclass;
+       B(A a){
+           aclass = a;
+       }
+       public void get(){
+           System.out.println(aclass.i);
+       }
+
+    }
+
+    }
+
 

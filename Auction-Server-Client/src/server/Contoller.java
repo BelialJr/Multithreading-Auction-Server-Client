@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import org.w3c.dom.events.Event;
@@ -78,7 +79,7 @@ public class Contoller {
     private JFXTextField dbTextField;
 
     @FXML
-    private TableView<String> dbTableView;
+    private TableView dbTableView;
     private DbStatus dbStatus = DbStatus.USER;
 
     private boolean serverIsStarted = false;
@@ -97,7 +98,7 @@ public class Contoller {
         initializeDBButtons();
     }
 
-    private void initializeDBButtons() {
+    private void initializeDBButtons(){
         EventHandler<ActionEvent> eventEventHandler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -115,7 +116,6 @@ public class Contoller {
         USER,CARD;
         public static DbStatus change(DbStatus dbStatus){
             if(dbStatus == USER)return CARD;
-            else
             if(dbStatus == CARD)return USER;
             return null;
         }
@@ -134,24 +134,42 @@ public class Contoller {
 
     private void invokeDataBaseTab() {
         dbTableView.getColumns().clear();
+        dbTableView.getItems().clear();
+        DbHandler dbHandler = DbHandler.getInstance();
 
         if(dbStatus == DbStatus.USER){
             TableColumn userIdcolumn = new TableColumn("User_ID");
+            userIdcolumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
             TableColumn lognColumn = new TableColumn("Login");
+            lognColumn.setCellValueFactory(new PropertyValueFactory<>("login"));
             TableColumn passwordColumn = new TableColumn("Password");
+            passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
             TableColumn bankColumn = new TableColumn("Bank");
+            bankColumn.setCellValueFactory(new PropertyValueFactory<>("bank"));
+
             dbTableView.getColumns().addAll(userIdcolumn, lognColumn, passwordColumn,bankColumn);
+            dbTableView.getItems().addAll(dbHandler.getTableViewUsers());
             dbTextField.setText("TABLE : USER");
         }else if(dbStatus == DbStatus.CARD){
 
             TableColumn cardIdColumn = new TableColumn("Card_ID");
+            cardIdColumn.setCellValueFactory(new PropertyValueFactory<>("cardId"));
             TableColumn nameColumn = new TableColumn("Name");
+            nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
             TableColumn heightColumn = new TableColumn("Height");
+            heightColumn.setCellValueFactory(new PropertyValueFactory<>("height"));
             TableColumn skinColorcolumn = new TableColumn("Skin_Color");
+            skinColorcolumn.setCellValueFactory(new PropertyValueFactory<>("skinColor"));
             TableColumn birthYearColumn = new TableColumn("Birth_year");
+            birthYearColumn.setCellValueFactory(new PropertyValueFactory<>("birthYear"));
             TableColumn genderColumn = new TableColumn("Gender");
+            genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
             TableColumn userIdcolumn = new TableColumn("User_ID");
+            userIdcolumn.setCellValueFactory(new PropertyValueFactory<>("userID"));
+
+
             dbTableView.getColumns().addAll(cardIdColumn, nameColumn, heightColumn,skinColorcolumn,birthYearColumn,genderColumn,userIdcolumn);
+            dbTableView.getItems().addAll(dbHandler.getTableViewCards());
             dbTextField.setText("TABLE : CARD");
         }
     }

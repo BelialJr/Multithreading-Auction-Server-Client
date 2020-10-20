@@ -1,11 +1,4 @@
-package server;
-
-import com.google.gson.JsonElement;
-import javafx.scene.control.ListView;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+package client.UxCardButtons;
 
 public class DefaultCard {
     private String name ;

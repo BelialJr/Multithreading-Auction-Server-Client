@@ -1,12 +1,15 @@
-package client;
+package client.UxCardButtons;
 
 
+import client.TimeLines;
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 import server.DefaultCard;
 
-import javax.swing.*;
+
 import java.awt.*;
 
 public class CardInvenotryButton extends Button {
@@ -31,13 +34,14 @@ public class CardInvenotryButton extends Button {
     }
 
     public CardInvenotryButton(Integer cardID, DefaultCard defaultCard) {
-        this.wrapTextProperty().setValue(true);
+     this.wrapTextProperty().setValue(true);
         this.textAlignmentProperty().set(TextAlignment.CENTER);
         this.setPrefSize(WIDTH,HEiGHT);
-        this.setText(defaultCard.getName());
+        this.setText("--Card--\n\n\n"+defaultCard.getName()+"\n\n\n\n\n---------");
         this.defaultCard = defaultCard;
         TimeLines.configureButton(this);
-
+        if(defaultCard.isDisable())
+            this.setDisable(true);
     }
 
 

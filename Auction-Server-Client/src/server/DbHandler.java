@@ -1,5 +1,7 @@
 package server;
 import server.StarWarsAPI.StarWarsApiV2;
+import server.TableViewCLasses.TableViewCard;
+import server.TableViewCLasses.TableViewUser;
 
 //import javax.smartcardio.Card;
 import java.io.File;
@@ -12,6 +14,7 @@ public class DbHandler {
     private  static Connection connection;
     private static DbHandler dbHandler;
     private final String DB_FILE_PATH = System.getProperty("user.dir")+"\\"+"db\\"+"SQLiteDB.db";
+    private DefaultCard defaultCards[];
 
     private DbHandler(){
         try {
@@ -25,8 +28,9 @@ public class DbHandler {
                 connection = DriverManager.getConnection("jdbc:sqlite:" + DB_FILE_PATH);
                 Server.logger.log(Level.INFO,"Failed to find a database file" );
                 createDb();
-                addDefaultUsers();
-                addDefaultCards();
+                generateDefaultUsers();
+                generateDefaultCards();
+                generateDefaultHistory();
             }
         } catch (ClassNotFoundException | SQLException e) {
             Server.logger.log(Level.SEVERE,"Failed to connect to database" , e);
@@ -44,6 +48,7 @@ public class DbHandler {
         Statement statement = null;
         try {
             statement = connection.createStatement();
+            statement.execute("PRAGMA foreign_keys = ON;");
             statement.execute("CREATE TABLE User (\n" +
                     "    user_ID integer  NOT NULL PRIMARY KEY,\n" +
                     "    login varchar2  NOT NULL,\n" +
@@ -60,6 +65,17 @@ public class DbHandler {
                     "    user_ID integer  ,\n" +
                     "    FOREIGN KEY (user_ID)  REFERENCES User (user_ID) \n" +
                     ");");
+            statement.execute(    "CREATE TABLE SaleHistory (\n" +
+                    "sale_ID integer,\n" +
+                    "sellUser_ID integer,\n" +
+                    "buyUser_ID integer,\n" +
+                    "card_ID integer,\n" +
+                    "price integer NOT NULL,\n" +
+                    "PRIMARY KEY(sale_ID,sellUser_ID,buyUser_ID,card_ID),\n" +
+                    "FOREIGN KEY(sellUser_ID) REFERENCES User (user_ID),\n" +
+                    "FOREIGN KEY(card_ID)     REFERENCES Card (card_ID),\n" +
+                    "FOREIGN KEY(buyUser_ID) REFERENCES User (user_ID)\n" +
+                    ");");
             Server.logger.log(Level.INFO,"Database was successfully generated");
         } catch (SQLException e) {
             Server.logger.log(Level.SEVERE,"Create failed for Database",e);
@@ -67,19 +83,50 @@ public class DbHandler {
     }
 
 
-    private void addDefaultUsers(){
+    private void generateDefaultUsers(){
         for (int i = 1; i < 11 ; i++) {
             String index = String.valueOf(i);
             addNewUser(index, "user"+index, index, String.valueOf(1000));
         }
     }
-    private void addDefaultCards() {
-        DefaultCard defaultCards[] = StarWarsApiV2.getDefaultCards(80);
-        for (int i = 0; i < defaultCards.length ; i++) {
+    private void generateDefaultCards() {
+        this.defaultCards = StarWarsApiV2.getDefaultCards(80);
+        for (int i = 0; i < this.defaultCards .length ; i++) {
             String index = String.valueOf(i + 1);
-            addNewCard(index,defaultCards[i],((i%10)+1));
+            addNewCard(index,this.defaultCards [i],((i%10)+1));
         }
     }
+    private void generateDefaultHistory(){
+        Random random = new Random();
+        int lowestBet = 100;
+        int biggestBet = 950;
+        int index = 1;
+        int price  = 0;
+        for (int card_ID = 1; card_ID < this.defaultCards.length+1; card_ID++) {
+            for (int j = 0; j < 10; j++) {
+                price = random.nextInt(biggestBet-lowestBet) + lowestBet;
+                addNewSaleHistory(String.valueOf(index++),String.valueOf( card_ID),String.valueOf(price)) ;
+            }
+        }
+    }
+
+    private void addNewSaleHistory(String sale_ID, String card_ID, String price) {
+        try (PreparedStatement statement = connection.prepareStatement(
+                "INSERT INTO SaleHistory values(?,?,?,?,?)")) {
+            statement.setString(1,sale_ID);
+            statement.setString(2,null);
+            statement.setString(3,null);
+            statement.setString(4,card_ID);
+            statement.setString(5,price);
+            statement.execute();
+            Server.logger.log(Level.INFO,"SaleHistory: [Sale_ID: "+  sale_ID  + " Card_ID: "+ card_ID + " Price: "+ price + " ] was successfully generated");
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed in generate new salehistory to DataBase",e);
+            e.printStackTrace();
+        }
+    }
+
+
     private void addNewUser(String id,String login,String password,String bank){
         try (PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO User values(?,?,?,?)")) {
@@ -239,4 +286,114 @@ public class DbHandler {
         }
     }
 
+    public List<TableViewUser> getTableViewUsers(){
+        try (Statement statement =connection.createStatement()) {
+            List<TableViewUser> users = new ArrayList<TableViewUser>();
+            ResultSet resultSet = statement.executeQuery("SELECT * from User");
+            while (resultSet.next()) {
+                users.add(new TableViewUser(
+                        resultSet.getString("user_ID") ,
+                        resultSet.getString("login") ,
+                        resultSet.getString("password"),
+                        resultSet.getString("bank")) );
+            }
+            return users;
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to get all users from DataBase",e);
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+
+    public List<TableViewCard> getTableViewCards(){
+        try (Statement statement =connection.createStatement()) {
+            List<TableViewCard> users = new ArrayList<TableViewCard>();
+            ResultSet resultSet = statement.executeQuery("SELECT * from Card");
+            while (resultSet.next()) {
+                users.add( new TableViewCard( resultSet.getString("card_ID") ,
+                        resultSet.getString("name"),
+                        resultSet.getString("height"),
+                        resultSet.getString("skin_color"),
+                        resultSet.getString("birth_year"),
+                        resultSet.getString("gender"),
+                        resultSet.getString("user_ID")) );
+            }
+            return users;
+
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to get all cards from DataBase",e);
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+    public String getCardName(String card_ID){
+        try (Statement statement =connection.createStatement()) {
+            String query = String.format("SELECT name from Card\n" +
+                    "WHERE card_ID = \"%s\" ",card_ID);
+            ResultSet resultSet = statement.executeQuery(query);
+            if(resultSet.next())
+            {
+               return  resultSet.getString("name");
+
+            }
+            return "";
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to get card name",e);
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public String getUserHistory(String userID){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        try (Statement statement =connection.createStatement()) {
+            String query = String.format("SELECT sale_ID,Card.name as \"cardName\",saleColumn.login as \"saleLogin\",buyColumn.login as \"buyLogin\",price  from SaleHistory\n" +
+                    "Inner Join Card on Card.card_ID = SaleHistory.card_ID\n" +
+                    "INNER JOIN User saleColumn on saleColumn.user_ID = SaleHistory.sellUser_ID \n" +
+                    "INNER Join USer buyColumn on  buyColumn.user_ID = SaleHistory.buyUser_ID " +
+                    "WHERE SaleHistory.sellUser_ID = \"%s\" OR SaleHistory.buyUser_ID = \"%s\"",userID,userID);
+            ResultSet resultSet = statement.executeQuery(query);
+            while(resultSet.next())
+            {
+                String  sale_ID = resultSet.getString("sale_ID");
+                String  cardName = resultSet.getString("cardName");
+                String  saleLogin =        resultSet.getString("saleLogin");
+                String  buyLogin =       resultSet.getString("buyLogin");
+                String  price =       resultSet.getString("price");
+                stringBuilder.append(sale_ID+","+cardName+","+saleLogin+","+buyLogin+","+price+"#");
+            }
+
+            return  stringBuilder.toString();
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to get user history",e);
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public String getCardHistory(String userID){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        try (Statement statement =connection.createStatement()) {
+            String query = String.format("Select sale_ID ,CARD.name as \"cardName\",price from SaleHistory \n" +
+                    "INNER JOIN CARD on Card.card_ID = SaleHistory.card_ID \n" +
+                    "WHERE SaleHistory.card_ID =  \"%s\";",userID);
+            ResultSet resultSet = statement.executeQuery(query);
+            while(resultSet.next())
+            {
+                String  sale_ID = resultSet.getString("sale_ID");
+                String  cardName = resultSet.getString("cardName");
+                String  price =       resultSet.getString("price");
+                stringBuilder.append(sale_ID+","+cardName+","+price+"#");
+            }
+
+            return  stringBuilder.toString();
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to get user history",e);
+            e.printStackTrace();
+            return "";
+        }
+    }
 }

@@ -3,8 +3,10 @@ package client;
 
 
 import client.SellCardFXML.SellCardContoller;
+import client.UxCardButtons.CardInvenotryButton;
+import client.UxCardButtons.DefaultLobby;
+import client.UxCardButtons.LobbyButton;
 import com.jfoenix.controls.JFXButton;
-
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
@@ -12,6 +14,8 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.jfoenix.controls.JFXSpinner;
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -21,18 +25,21 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import server.DefaultCard;
+import server.Lobbie.LobbiesHandler;
 import server.Server;
 
 public class Controller {
@@ -79,6 +86,9 @@ public class Controller {
     @FXML
     private Label usersOnlineLabel;
 
+    @FXML
+    private ScrollPane ScrollPane;
+
     private static final Logger logger = Logger.getLogger(Server.class.getName());
     private SimpleStringProperty usersOnline = new SimpleStringProperty();
     public static  String login = "$";
@@ -87,21 +97,31 @@ public class Controller {
     private Socket socket;
     private boolean isConnected;
     private InputStream inputStream;
-    BufferedReader bufferedReader ;
+    public  BufferedReader bufferedReader;
     private OutputStream outputStream;
-    private Map<Integer, DefaultCard > userCardsInventory = new HashMap<>();
-    Timeline cardAddAnimation = new Timeline();
+    private Map<Integer, DefaultCard > userCardsInventory = new LinkedHashMap<>();
+    public  Map<Integer,List<String>> userCardsInventoryHistory = new LinkedHashMap<>();
+    public  Map<Integer, DefaultLobby> userLobbies = new LinkedHashMap<>();
+    private List<SaleStory > userSalesHistory = new ArrayList<>();
+    private Timeline cardAddAnimation = new Timeline();
+    private Insets insets  ;
 
     @FXML
     void initialize() {
+       this.insets= flowPane.getPadding();
        connectedCountListener();
        initializeDoConnect();
        initializeInventoryButton();
        initializeLobbyButton();
+       initializeHistoryButton();
        initializeConnectItem();
        initializeDisconnectItem();
+
        connected(false);
 
+    }
+    private void initializeHistoryButton() {
+            historyButton.setOnAction(e->generateHistory());
     }
 
     private void initializeInventoryButton(){
@@ -111,51 +131,146 @@ public class Controller {
             lobbiesButton.setOnAction(e -> generateLobby());
     }
 
-    private void generateLobby() {
+    public void sendCardToServer(DefaultCard card,String price){
+        Integer card_ID =getCard_ID(card);
+        disableInventoryButton(card,card_ID,true);
+        sendToServer("CARD_TO_SALE " + card_ID + " " + price);
+    }
+
+    private void disableInventoryButton(DefaultCard card, Integer card_ID,boolean b) {
+        userCardsInventory.get(card_ID).setDisable(b);
+        int index = 0;
+        for(DefaultCard defaultCard:userCardsInventory.values()){
+            if(defaultCard.hashCode() == card.hashCode())
+                break;
+            index++;
+        }
+        final int index1 = index;
+        Platform.runLater(()->{
+            flowPane.getChildren().get(index1).setDisable(b);});
+    }
+
+    public  Integer getCard_ID(DefaultCard defaultCard) {
+        Optional<Integer> optional = userCardsInventory.entrySet().stream().filter(entry->entry.getValue() == defaultCard).map(Map.Entry::getKey).findFirst();
+        return  optional.get();
+    }
+
+
+    private void generateHistory() {
         if (this.isConnected) {
             this.cardAddAnimation.stop();
             flowPane.getChildren().clear();
+            flowPane.setPadding(new Insets(0));
+            TableView<SaleStory> tableView  = new TableView<SaleStory>();
+            tableView.setPrefSize(flowPane.getPrefWidth(),flowPane.getHeight());
+            TableColumn statusColumn = new TableColumn("Status");
+            statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+            statusColumn.setCellFactory(factory ->new CustomCell());
+            TableColumn saleIdColumn = new TableColumn("Sale_ID");
+            saleIdColumn.setCellValueFactory(new PropertyValueFactory<>("sale_ID"));
+            TableColumn cardNameColumn = new TableColumn("Card_Name");
+            cardNameColumn.setCellValueFactory(new PropertyValueFactory<>("cardName"));
+            TableColumn sellUserIdColumn = new TableColumn("UserSold");
+            sellUserIdColumn.setCellValueFactory(new PropertyValueFactory<>("saleLogin"));
+            TableColumn buyUserIDColumn = new TableColumn("UserBought");
+            buyUserIDColumn.setCellValueFactory(new PropertyValueFactory<>("buyLogin"));
+            TableColumn priceColumn = new TableColumn("Price");
+            priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+            tableView.getColumns().addAll(statusColumn, saleIdColumn ,cardNameColumn,sellUserIdColumn,buyUserIDColumn,priceColumn);
+            tableView.getItems().addAll(this.userSalesHistory);
+            flowPane.getChildren().add(tableView);
         }
     }
+
+    private void generateLobby() {
+        if (this.isConnected) {
+            this.cardAddAnimation.stop();
+            this.cardAddAnimation.setOnFinished(e->{});
+            flowPane.getChildren().clear();
+            flowPane.setPadding(this.insets);
+
+            if(!this.userLobbies.isEmpty()) {
+                List<LobbyButton> allLobbies = new ArrayList<>();
+                userLobbies.forEach((k, v) -> {
+                    LobbyButton cardInvenotryButton = new LobbyButton(k, v);
+                    cardInvenotryButton.setOnAction(e -> {
+                        invokeLobbyEnter(cardInvenotryButton);
+                    });
+                    allLobbies.add(cardInvenotryButton);
+
+                });
+                this.cardAddAnimation = new Timeline(new KeyFrame(Duration.seconds(0.1), new EventHandler<ActionEvent>() {
+                    int index = 0;
+
+                    @Override
+                    public void handle(ActionEvent event) {
+                        flowPane.getChildren().add(allLobbies.get(index++));
+                    }
+                }));
+                this.cardAddAnimation.setCycleCount(allLobbies.size());
+                this.cardAddAnimation.play();
+            }
+        }
+    }
+
+
 
     private void generateInventory(){
         if (this.isConnected) {
             this.cardAddAnimation.stop();
+            this.cardAddAnimation.setOnFinished(e->{});
             flowPane.getChildren().clear();
-            List<CardInvenotryButton> allCards = new ArrayList<>();
-            userCardsInventory.forEach((k, v) -> {
-                CardInvenotryButton cardInvenotryButton = new CardInvenotryButton(k, v);
-                cardInvenotryButton.setOnAction(e->{invokeCardSelling(cardInvenotryButton);});
-                allCards.add(cardInvenotryButton);
-            });
+            flowPane.setPadding(this.insets);
+            if (!this.userCardsInventory.isEmpty()) {
+                List<CardInvenotryButton> allCards = new ArrayList<>();
+                userCardsInventory.forEach((k, v) -> {
+                    CardInvenotryButton cardInvenotryButton = new CardInvenotryButton(k, v);
+                    cardInvenotryButton.setOnAction(e -> {
+                        invokeCardSelling(cardInvenotryButton);
+                    });
+                    allCards.add(cardInvenotryButton);
+                });
                 this.cardAddAnimation = new Timeline(new KeyFrame(Duration.seconds(0.1), new EventHandler<ActionEvent>() {
-                int i = 0;
-                @Override
-                public void handle(ActionEvent event) {
-                    flowPane.getChildren().add(allCards.get(i++));
-                }
-            }));
-            this.cardAddAnimation.setCycleCount(allCards.size());
-            this.cardAddAnimation.play();
+                    int i = 0;
+
+                    @Override
+                    public void handle(ActionEvent event) {
+                        flowPane.getChildren().add(allCards.get(i++));
+                    }
+                }));
+                this.cardAddAnimation.setCycleCount(allCards.size());
+                this.cardAddAnimation.play();
+            }
         }
+    }
+    private void invokeLobbyEnter(LobbyButton cardInvenotryButton) {
+
     }
 
     private void invokeCardSelling(CardInvenotryButton cardInvenotryButton) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("SellCardFXML/SellCard.fxml"));
-            SellCardContoller controller = new SellCardContoller();
-            loader.setController(controller);
             Parent hbox = loader.load();
-            Scene scene = new Scene(hbox, 514, 317);
+            SellCardContoller controller = loader.getController();
+            Scene scene = new Scene(hbox, 731, 324);
             Stage stage = new Stage();
             stage.setResizable(false);
+            stage.getIcons().add(new Image("file:" + System.getProperty("user.dir")+"\\"+"source\\"+"sellIcon.png"));
             stage.setScene(scene);
-            controller.setData(cardInvenotryButton);
+            stage.setTitle("Sell Card");
+            Integer card_ID = getCard_ID(cardInvenotryButton.getDefaultCard());
+            sendToServer("CARD_LAST_PRICES "+ card_ID);
+            controller.setData(cardInvenotryButton,this);
             stage.show();
+
+
+
         }catch (IOException ignore) {
 
         }
     }
+
+
 
     private void initializeDoConnect() {
         doConnect.setOnAction(event -> {
@@ -168,9 +283,9 @@ public class Controller {
         logInItem.setOnAction(e-> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInFXML/logInSample.fxml"));
-                Controller controller = loader.getController();
                 Parent root = loader.load();
                 Stage stage = new Stage();
+                stage.getIcons().add(new Image("file:" + System.getProperty("user.dir")+"\\"+"source\\"+"loginIcon.png"));
                 stage.setScene(new Scene(root));
                 stage.setTitle("Log in");
                 stage.show();
@@ -181,12 +296,6 @@ public class Controller {
         });
     }
 
-   /* @FXML
-    public void transferLogData(String login,String password){
-        if(login!=null)this.login = login;
-        if(password!=null)this.password = password;
-        System.out.println(this.login + " transfer data = " + this.password);
-    }*/
 
     private void openSocket() {
         try {
@@ -219,21 +328,64 @@ public class Controller {
 
                     if(str[0].equals("INVENTORY")) {
                          line = line.substring(10);
-                         List<String> cardsList = Arrays.asList( line.split("#"));
-                         for(String cardStr :cardsList){
-                             Integer cardID = Integer.parseInt(cardStr.split("::")[0]);
-                             userCardsInventory.put(cardID,DefaultCard.castToCard(cardStr.split("::")[1]));
-                         }
+                        if(!line.equals("")) {
+                            List<String> cardsList = Arrays.asList(line.split("#"));
+                            for (String cardStr : cardsList) {
+                                Integer cardID = Integer.parseInt(cardStr.split("::")[0]);
+                                userCardsInventory.put(cardID, DefaultCard.castToCard(cardStr.split("::")[1]));
+                            }
+                        }
+                    }
+
+                    if(str[0].equals("HISTORY")) {
+                        line = line.substring(8);
+                        if(!line.equals("")) {
+                            List<String> historyList = Arrays.asList(line.split("#"));
+                            for (String historyStr : historyList) {
+                                userSalesHistory.add(new SaleStory(historyStr));
+                            }
+                        }
                     }
 
                     if(str[0].equals("LOBBIES")) {
 
                     }
+                    if(str[0].equals("LOBBY_NEW")) {
+                        for (String str1 : line.split(" ")){
+                            System.out.println(str1);
+                        }
+                            DefaultLobby defaultLobby = new DefaultLobby(str[2],str[3],str[4].replace("#"," "),str[5]);
+                            userLobbies.put(Integer.parseInt(str[1]) ,defaultLobby);
+                           // Platform.runLater( ()-> generateLobby());
+                    }
+                    if(str[0].equals("CARD_DEL")) {
+                        Platform.runLater(() -> deleteButtonFromPaneAndList(CardInvenotryButton.class , str[1]));
+                    }
+
+                    if(str[0].equals("LOBBY_DEL")) {
+                        Platform.runLater(() -> deleteButtonFromPaneAndList(LobbyButton.class , str[1]));
+                    }
+                    if(str[0].equals("CARD_PRICE_HISTORY")) {
+                        Integer card_ID = Integer.parseInt(str[1]);
+                        String[] data = (line.substring("CARD_PRICE_HISTORY".length()+3).trim()).split("#");
+                        String singlePrice = null;
+                        List<String> res = new ArrayList<>();
+                        res.add(String.format("%-12s","")+String.format("%-4s","SALE_ID " )+ "| "   + String.format("%-10s","CARD_NAME " ) +  " | "  + String.format("%-3s","PRICE")+ "|");
+                        for (String string : data){
+                             String[] lineSplited = string.split(",");
+                             singlePrice =String.format("%-14s","|")+String.format("%-8s","|"+lineSplited[0] )+ "|"   + String.format("%-15s",lineSplited[1] ) +  " | "  + String.format("%-4s",lineSplited[2])+ "|"+ "          |";
+                             res.add(singlePrice);
+                        }
+                        userCardsInventoryHistory.put(card_ID,res);
+
+
+                    }
 
                     if(str[0].equals("STANDART_PACKET_END")) {
                         Platform.runLater(() -> { generateInventory();});
-                      //  Platform.runLater(() -> { generateLobby();});
+                        //Platform.runLater(() -> { generateLobby();});
                     }
+
 
                     if(str[0].equals("USERSONLINE")) {
                         Platform.runLater(() -> {usersOnline.set(str[1]);});
@@ -264,6 +416,67 @@ public class Controller {
 
     }
 
+    private  void deleteButtonFromPaneAndList(Class<?> classVrt, String id) {
+        Integer button_ID = Integer.parseInt(id);
+        Node flowNode = flowPane.getChildren().get(0);
+
+        if (CardInvenotryButton.class == (classVrt)) {
+           DefaultCard cardToDelte =  userCardsInventory.remove(button_ID);
+           userCardsInventoryHistory.remove(button_ID);
+           if(flowNode instanceof  CardInvenotryButton){
+               for (Iterator<Node> it = flowPane.getChildren().iterator(); it.hasNext(); ) {
+                   Node node = it.next();
+                   if( ((CardInvenotryButton) node).getDefaultCard().hashCode() ==cardToDelte.hashCode()){
+                       flowPane.getChildren().remove(node);
+                   }
+               }
+           }
+        }
+        if (LobbyButton.class == (classVrt)) {
+           DefaultLobby lobbyToRemove =  userLobbies.remove(button_ID);
+            if(flowNode instanceof  LobbyButton){
+
+                for (Iterator<Node> it = flowPane.getChildren().iterator(); it.hasNext(); ) {
+                    Node node = it.next();
+                    if( ((LobbyButton) node).getDefaultLobby().hashCode() == lobbyToRemove.hashCode()){
+                       // flowPane.getChildren().remove(node);
+                        deleteFromPaneAnimation(((LobbyButton) node));
+                    }
+                }
+            }
+        }
+
+    }
+    public  void deleteFromPaneAnimation(Button cardInvenotryButton1){
+        while(true) {
+            if (!(this.cardAddAnimation.getStatus() == Animation.Status.RUNNING)) {
+
+                this.cardAddAnimation = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+                    cardInvenotryButton1.setDisable(true);
+                }), new KeyFrame(Duration.seconds(2)));
+
+                this.cardAddAnimation.setOnFinished(e -> {
+                        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.01), new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            cardInvenotryButton1.setScaleX(cardInvenotryButton1.getScaleX() * 0.90);
+                            cardInvenotryButton1.setScaleY(cardInvenotryButton1.getScaleY() * 0.90);
+                        }
+                    }));
+                   timeline.setCycleCount(80);
+                   timeline.setOnFinished(event -> {
+                       this.flowPane.getChildren().remove(cardInvenotryButton1);
+                   });
+                   timeline.play();
+                });
+                this.cardAddAnimation.setCycleCount(1);
+                this.cardAddAnimation.play();
+
+            }
+            break;
+        }
+    }
+
     private void logIN() {
         sendToServer("LOGIN " +this.login + " " + this.password);
     }
@@ -274,7 +487,7 @@ public class Controller {
         } );
     }
 
-    private void sendToServer(String s){
+    public void sendToServer(String s){
         try {
             outputStream.write((s + "\n").getBytes());
             outputStream.flush();

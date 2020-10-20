@@ -38,8 +38,9 @@ public class LogController {
             String login = "$";
             String passw = "$";
 
-            if(LoginField.getText() != null) {login = LoginField.getText();  controller.login = LoginField.getText();}
-            if(PasswordField.getText()!= null){ passw = PasswordField.getText();controller.password = PasswordField.getText();}
+            if(LoginField.getText() != null) {login = LoginField.getText();   Controller.login = LoginField.getText();}
+            if(PasswordField.getText()!= null){ passw = PasswordField.getText();Controller.password = PasswordField.getText();}
+
             //controller.transferLogData(login, passw);
             } catch (IOException e) {
                 e.printStackTrace();

@@ -2,9 +2,13 @@ package server;
 
 
 import javafx.beans.property.SimpleIntegerProperty;
+import server.Lobbie.Lobby;
+import server.Lobbie.LobbiesHandler;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -16,16 +20,16 @@ public class UserConnection{
     private InputStream is;
     private OutputStream os;
     private Socket socket;
-    private Consumer<String> sendToAllLogedUsers ;
+    public  Consumer<String> sendToAllLogedUsers ;
     private DbHandler dbHandler;
     private User user;
     SimpleIntegerProperty usersOnline = new SimpleIntegerProperty(0);
     private String login;
     private String password;
-    private String userID; //DB user ID
+    public String userID; //DB user ID
+    private LobbiesHandler lobbiesHandler;
 
-
-    public UserConnection( User user , Socket socket,  DbHandler dbHandler,SimpleIntegerProperty usersOnline,Consumer<String> sendToAllLogedUsers) throws IOException {
+    public UserConnection(User user , Socket socket,  DbHandler dbHandler,SimpleIntegerProperty usersOnline,LobbiesHandler lobbiesHandler ,Consumer<String> sendToAllLogedUsers) throws IOException {
         this.socket = socket;
         this.is = this.socket.getInputStream();
         this.os = this.socket.getOutputStream();
@@ -34,7 +38,8 @@ public class UserConnection{
         this.dbHandler = dbHandler;
         initializeUsersOnlineListener();
         this.usersOnline.bind(usersOnline);
-
+        this.lobbiesHandler = lobbiesHandler;
+        lobbiesHandler.addUserConnection(this);
     }
 
 
@@ -43,7 +48,7 @@ public class UserConnection{
         while(!socket.isClosed()){
             String line  = bf.readLine();
             String[] str = line.split(" ");
-            Server.logger.log(Level.FINE,"SOCKET INPUT :  " +  user.toString() + " : " + line);
+            Server.logger.log(Level.INFO,"SOCKET INPUT :  " +  user.toString() + " : " + line);
 
             if(!hasBennLogedIn){
                 if(str[0].equals("LOGIN")){
@@ -59,20 +64,32 @@ public class UserConnection{
                     }
                 }
             }
-            else
-            {
+            else{
+                if (str[0].equals("CARD_TO_SALE")) {
+                    lobbiesHandler.addNewLobby(this,str[1],str[2]);
+                    //sendToAllLogedUsers.accept("NEW_LOBBY ");
+                }
 
+                if (str[0].equals("CARD_LAST_PRICES")) {
+                    send("CARD_PRICE_HISTORY "+str[1] +" "+ dbHandler.getCardHistory(str[1]));
+                }
             }
         }
         throw new ClassNotFoundException();
     }
-
+    //add History USer and CARD history
     private void sendStandartDataPackage(){
         send("USERSONLINE "+usersOnline.getValue());
         sendBank();
         sendInventory();
+        sendHistory();
         sendLobbies();
         send("STANDART_PACKET_END");
+    }
+
+    private void sendHistory() {
+        String result = dbHandler.getUserHistory(this.userID);
+        send("HISTORY "  + result);
     }
 
     private void sendBank() {
@@ -81,7 +98,7 @@ public class UserConnection{
     }
 
     private void sendLobbies() {
-        send("LOBBIES " );
+        send("LOBBIES" );
     }
 
     private void sendInventory() {
@@ -129,4 +146,13 @@ public class UserConnection{
 
     }
 
+    @Override
+    public String toString() {
+        return "UserConnection{" +
+                "user=" + user +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", userID='" + userID + '\'' +
+                '}';
+    }
 }
