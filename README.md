@@ -1,4 +1,4 @@
-##### Multithreading-Auction-Server-Client
+# Multithreading-Auction-Server-Client
 This project is developed in Java,SqlLite database,JavaFX.
 It consist of Socket Programming,Multithreading,Synchronized Blocks,JDBC,Collection and Generics in Java.
 
