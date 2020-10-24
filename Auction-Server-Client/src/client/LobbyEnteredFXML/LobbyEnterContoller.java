@@ -114,8 +114,10 @@ public class LobbyEnterContoller {
                     betList.getItems().add(line);
                 }
             }
-            String str = betList.getItems().get(betList.getItems().size()-1);
-            maxBetLabel.setText(str.split(":")[2].replace("|","").replace(" ","")+"$");
+            if(!betList.getItems().isEmpty()) {
+                String str = betList.getItems().get(betList.getItems().size() - 1);
+                maxBetLabel.setText(str.split(":")[2].replace("|", "").replace(" ", "") + "$");
+            }
             return;
 
         }),new KeyFrame(Duration.seconds(0.3)));
