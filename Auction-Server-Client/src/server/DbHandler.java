@@ -26,7 +26,7 @@ public class DbHandler {
                 Server.logger.log(Level.INFO,"Successfully connected to database" );
             }else{
                 connection = DriverManager.getConnection("jdbc:sqlite:" + DB_FILE_PATH);
-                Server.logger.log(Level.INFO,"Failed to find a database file" );
+                Server.logger.log(Level.INFO,"Failed to find a database file");
                 createDb();
                 generateDefaultUsers();
                 generateDefaultCards();
@@ -116,6 +116,21 @@ public class DbHandler {
             statement.setString(1,sale_ID);
             statement.setString(2,null);
             statement.setString(3,null);
+            statement.setString(4,card_ID);
+            statement.setString(5,price);
+            statement.execute();
+            Server.logger.log(Level.INFO,"SaleHistory: [Sale_ID: "+  sale_ID  + " Card_ID: "+ card_ID + " Price: "+ price + " ] was successfully generated");
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed in generate new salehistory to DataBase",e);
+            e.printStackTrace();
+        }
+    }
+    private void addNewDataSaleHistory(String sale_ID, String sellUser_ID,String boughtUser_ID,String card_ID, String price) {
+        try (PreparedStatement statement = connection.prepareStatement(
+                "INSERT INTO SaleHistory values(?,?,?,?,?)")) {
+            statement.setString(1,sale_ID);
+            statement.setString(2,sellUser_ID);
+            statement.setString(3,boughtUser_ID);
             statement.setString(4,card_ID);
             statement.setString(5,price);
             statement.execute();
@@ -221,12 +236,25 @@ public class DbHandler {
         DbHandler dbHandler = DbHandler.getInstance();
         dbHandler.getAllUsers().forEach(System.out::println);
         dbHandler.getAllCards().forEach(System.out::println);
-
     }
 
     public String getUserBank(String login) {
         try (Statement statement =connection.createStatement()) {
             String query = String.format("SELECT * from User WHERE LOGIN = \"%s\" ",login);
+            ResultSet resultSet = statement.executeQuery(query);
+            if(resultSet.next()){
+                return resultSet.getString("bank");
+            }
+            return "0";
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to get user bank",e);
+            e.printStackTrace();
+            return "0";
+        }
+    }
+    public String getUserBank(Integer user_ID) {
+        try (Statement statement =connection.createStatement()) {
+            String query = String.format("SELECT bank from User WHERE user_ID = \"%s\" ",user_ID);
             ResultSet resultSet = statement.executeQuery(query);
             if(resultSet.next()){
                 return resultSet.getString("bank");
@@ -267,7 +295,27 @@ public class DbHandler {
             return Collections.EMPTY_MAP;
         }
         return  resultInvenory;
+    }
 
+    public String getCardData (String cardID) {
+        try (Statement statement =connection.createStatement()) {
+            ResultSet resultSet2 = statement.executeQuery(String.format("SELECT * from CARD WHERE  card_ID =\"%s\"  ",cardID));
+            if(resultSet2.next())
+            {
+                Integer card_ID = Integer.parseInt(resultSet2.getString("card_ID"));
+                return cardID+"::"+resultSet2.getString("name") +","+
+                        resultSet2.getString("height")+","+
+                        resultSet2.getString("skin_color")+","+
+                        resultSet2.getString("birth_year")+","+
+                        resultSet2.getString("gender")+"#";
+
+            }
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to get user inventory",e);
+            e.printStackTrace();
+            return "";
+        }
+        return  "";
     }
 
 
@@ -344,6 +392,22 @@ public class DbHandler {
             return "";
         }
     }
+    public String getUserName(String user_ID) {
+        try (Statement statement =connection.createStatement()) {
+            String query = String.format("SELECT login from User\n" +
+                    "WHERE user_ID = \"%s\" ",user_ID);
+            ResultSet resultSet = statement.executeQuery(query);
+            if(resultSet.next())
+            {
+                return  resultSet.getString("login");
+            }
+            return "";
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to get card name",e);
+            e.printStackTrace();
+            return "";
+        }
+    }
 
     public String getUserHistory(String userID){
         StringBuilder stringBuilder = new StringBuilder();
@@ -394,6 +458,59 @@ public class DbHandler {
             Server.logger.log(Level.SEVERE,"Failed to get user history",e);
             e.printStackTrace();
             return "";
+        }
+    }
+
+private enum Action{PLUS,MINUS};
+
+    public void handleSaleOperation(Integer host_UserID, Integer bought_ID, String card_ID, Integer bet){
+            updateCardUser_ID(card_ID,bought_ID);
+            updateUserBank(bought_ID,bet,Action.MINUS);
+            updateUserBank(host_UserID,bet,Action.PLUS);
+            addNewDataSaleHistory(getNewSAleHistoryId(),String.valueOf(host_UserID) ,String.valueOf(bought_ID) ,card_ID,String.valueOf(bet));
+
+    }
+
+    private void updateUserBank(Integer userID, Integer bet, Action action) {
+        Integer newBank = 0;
+        if(action == Action.MINUS) {
+             newBank = Integer.parseInt(this.getUserBank(userID)) - bet;
+        }
+        else{
+             newBank = Integer.parseInt(this.getUserBank(userID)) + bet;
+        }
+        String sql = String.format("UPDATE User SET bank = \"%s\"  WHERE user_ID = \"%s\"",String.valueOf(newBank),String.valueOf(userID));
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.execute();
+            Server.logger.log(Level.INFO,"User Bank was successfully changed");
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to change User Bank ",e);
+            e.printStackTrace();
+        }
+    }
+
+    private String getNewSAleHistoryId() {
+        try (Statement statement =connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(" SELECT MAX (sale_ID) + 1 as \"new_ID\" from SaleHistory");
+            if (resultSet.next()) {
+                 return resultSet.getString("new_ID");
+            }
+            return "";
+        }catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to get all cards from DataBase",e);
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    private void updateCardUser_ID(String card_ID, Integer bought_ID) {
+         String sql = String.format("UPDATE CARD SET user_ID = \"%s\"  WHERE card_ID = \"%s\"",bought_ID,card_ID);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.execute();
+            Server.logger.log(Level.INFO,"Card Data was successfully changed");
+        } catch (SQLException e) {
+            Server.logger.log(Level.SEVERE,"Failed to change Card Data ",e);
+            e.printStackTrace();
         }
     }
 }

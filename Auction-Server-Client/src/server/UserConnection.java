@@ -7,10 +7,7 @@ import server.Lobbie.LobbiesHandler;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
@@ -67,7 +64,13 @@ public class UserConnection{
             else{
                 if (str[0].equals("CARD_TO_SALE")) {
                     lobbiesHandler.addNewLobby(this,str[1],str[2]);
-                    //sendToAllLogedUsers.accept("NEW_LOBBY ");
+
+                }
+
+                if (str[0].equals("LOBBY_BET")) {
+                    this.lobbiesHandler.makeBET(str[1],str[2],this.userID);
+                  //  System.out.println(Arrays.toString(str) + " USER_ID " + this.userID);
+
                 }
 
                 if (str[0].equals("CARD_LAST_PRICES")) {
@@ -84,21 +87,24 @@ public class UserConnection{
         sendInventory();
         sendHistory();
         sendLobbies();
+        sendBets();
         send("STANDART_PACKET_END");
     }
-
-    private void sendHistory() {
+    public void sendHistory() {
         String result = dbHandler.getUserHistory(this.userID);
         send("HISTORY "  + result);
     }
 
-    private void sendBank() {
+    public void sendBank() {
           String  result = dbHandler.getUserBank(this.login);
           send("BANK " + result);
     }
 
     private void sendLobbies() {
-        send("LOBBIES" );
+        send("LOBBIES " + lobbiesHandler.getLobbyInfo());
+    }
+    private void sendBets() {
+        send("ALL_BETS " + lobbiesHandler.getLobbysBets());
     }
 
     private void sendInventory() {
@@ -144,6 +150,10 @@ public class UserConnection{
 
             }
 
+    }
+
+    public Integer getUserID() {
+        return Integer.parseInt(userID);
     }
 
     @Override

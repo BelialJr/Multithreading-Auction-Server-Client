@@ -1,6 +1,13 @@
 package client.UxCardButtons;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import server.DefaultCard;
+
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DefaultLobby {
     private String card_ID;
@@ -10,7 +17,9 @@ public class DefaultLobby {
     private LocalTime futureStop;
     private LocalTime variableToPrint;
 
+
     public DefaultLobby(String card_ID, String cardName, String price, String startTime) {
+
         this.card_ID = card_ID;
         this.cardName = cardName;
         this.price = price;
@@ -18,6 +27,13 @@ public class DefaultLobby {
         this.futureStop = currentTime.plusMinutes(1).plusSeconds(1);
         this.variableToPrint = currentTime.plusMinutes(1).plusSeconds(1);
     }
+    public static DefaultLobby castToLobby(String s){
+        String[] data = s.split(",");
+        DefaultLobby result = new DefaultLobby(data[0],data[1].replace("&"," "),data[2],data[3]);
+        return result;
+    }
+
+
 
     public String getCard_ID() {
         return card_ID;

@@ -7,6 +7,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -21,14 +24,16 @@ import javafx.util.Duration;
 import server.DefaultCard;
 
 import java.awt.*;
+import java.sql.Array;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
+import java.util.*;
+import java.util.List;
+import java.util.stream.IntStream;
 
 
 public class maain extends Application {
-
-        @Override public void start(Stage stage) {
+        @Override public void start(Stage stage){
             stage.setTitle("Line Chart Sample");
             final CategoryAxis xAxis = new CategoryAxis();
             final NumberAxis yAxis = new NumberAxis();
@@ -95,30 +100,22 @@ public class maain extends Application {
             //JFXTimePickerContent jfxTimePickerContent;
 
            // Test test = new Test(new JFXTimePicker());
+         /*   String str[] = {"1","2","3"};
+            String string[] = new String[str.length-1];
+            System.arraycopy(str,1,string,0,str.length-1);
+            System.out.println(Arrays.toString(string));*/
 
 
+            HashMap<Integer,String> has = new HashMap<>();
+            has.put(1,"2");
+            System.out.println(has.get(2));
+           // Map<Integer,"2">
 
+          //  stage.setScene(scene);
+          //  stage.show();
+            String  str = "ff";
+            StringBuilder stringBuilder = new StringBuilder();
 
-
-            FlowPane flowPane1 = new FlowPane();
-            flowPane.setVgap(50);
-            Scene scene = new Scene(flowPane1,800,800);
-            CardInvenotryButton cardInvenotryButton1 = new CardInvenotryButton(2,new DefaultCard("name","name","name","name","name"));
-            CardInvenotryButton cardInvenotryButton2 = new CardInvenotryButton(2,new DefaultCard("name","name","name","name","name"));
-            CardInvenotryButton cardInvenotryButton3 = new CardInvenotryButton(2,new DefaultCard("name","name","name","name","name"));
-            CardInvenotryButton cardInvenotryButton4 = new CardInvenotryButton(2,new DefaultCard("name","name","name","name","name"));
-
-      /*      set(cardInvenotryButton1);
-            set(cardInvenotryButton2);
-            set(cardInvenotryButton3);
-            set(cardInvenotryButton4);
-            ;*/
-            flowPane1.getChildren().addAll(cardInvenotryButton1,cardInvenotryButton2,cardInvenotryButton3,cardInvenotryButton4);
-
-
-
-            stage.setScene(scene);
-            stage.show();
         }
 
 

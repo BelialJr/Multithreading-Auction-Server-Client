@@ -2,6 +2,7 @@ package client;
 
 
 
+import client.LobbyEnteredFXML.LobbyEnterContoller;
 import client.SellCardFXML.SellCardContoller;
 import client.UxCardButtons.CardInvenotryButton;
 import client.UxCardButtons.DefaultLobby;
@@ -13,6 +14,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.IntStream;
 
 import com.jfoenix.controls.JFXSpinner;
 import javafx.animation.Animation;
@@ -34,6 +36,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -100,11 +103,18 @@ public class Controller {
     public  BufferedReader bufferedReader;
     private OutputStream outputStream;
     private Map<Integer, DefaultCard > userCardsInventory = new LinkedHashMap<>();
-    public  Map<Integer,List<String>> userCardsInventoryHistory = new LinkedHashMap<>();
+    public  Map<Integer, List<String>> userCardsInventoryHistory = new LinkedHashMap<>();
     public  Map<Integer, DefaultLobby> userLobbies = new LinkedHashMap<>();
+    public  Map<Integer, List<String>> lobbiesBets = new LinkedHashMap<>();
     private List<SaleStory > userSalesHistory = new ArrayList<>();
     private Timeline cardAddAnimation = new Timeline();
-    private Insets insets  ;
+    private Insets insets;
+
+
+
+
+    enum Status{LOBBIES,INVENOTRY,HISTORY };
+    private Status status = null;
 
     @FXML
     void initialize() {
@@ -121,24 +131,32 @@ public class Controller {
 
     }
     private void initializeHistoryButton() {
-            historyButton.setOnAction(e->generateHistory());
+            historyButton.setOnAction(e-> {this.status = Status.HISTORY;generateHistory();});
+
     }
 
     private void initializeInventoryButton(){
-            inventoryButton.setOnAction(e -> generateInventory());
+            inventoryButton.setOnAction(e -> {this.status = Status.INVENOTRY; generateInventory(); } );
     }
     private void initializeLobbyButton(){
-            lobbiesButton.setOnAction(e -> generateLobby());
+            lobbiesButton.setOnAction(e ->{ this.status = Status.LOBBIES;generateLobby();});
     }
 
     public void sendCardToServer(DefaultCard card,String price){
         Integer card_ID =getCard_ID(card);
-        disableInventoryButton(card,card_ID,true);
+        disableInventoryButton(card_ID,true);
         sendToServer("CARD_TO_SALE " + card_ID + " " + price);
     }
 
-    private void disableInventoryButton(DefaultCard card, Integer card_ID,boolean b) {
-        userCardsInventory.get(card_ID).setDisable(b);
+    public void sendBetToServer(DefaultLobby defaultLobby, String bet) {
+        Integer lobby_ID = getLobby_ID(defaultLobby);
+        sendToServer("LOBBY_BET " + lobby_ID + " " + bet);
+    }
+
+
+    private void disableInventoryButton(Integer card_ID,boolean b) {
+        DefaultCard card = userCardsInventory.get(card_ID);
+        card.setDisable(b);
         int index = 0;
         for(DefaultCard defaultCard:userCardsInventory.values()){
             if(defaultCard.hashCode() == card.hashCode())
@@ -150,11 +168,16 @@ public class Controller {
             flowPane.getChildren().get(index1).setDisable(b);});
     }
 
+
     public  Integer getCard_ID(DefaultCard defaultCard) {
         Optional<Integer> optional = userCardsInventory.entrySet().stream().filter(entry->entry.getValue() == defaultCard).map(Map.Entry::getKey).findFirst();
         return  optional.get();
     }
 
+    private Integer getLobby_ID(DefaultLobby defaultLobby) {
+        Optional<Integer> optional = userLobbies.entrySet().stream().filter(entry->entry.getValue() == defaultLobby).map(Map.Entry::getKey).findFirst();
+        return  optional.get();
+    }
 
     private void generateHistory() {
         if (this.isConnected) {
@@ -182,6 +205,20 @@ public class Controller {
         }
     }
 
+    private  void addButtonToPaneAnimation(List<Button> allLobbies){
+        this.cardAddAnimation = new Timeline(new KeyFrame(Duration.seconds(0.1), new EventHandler<ActionEvent>() {
+            int index = 0;
+            @Override
+            public void handle(ActionEvent event) {
+                flowPane.getChildren().add(allLobbies.get(index++));
+            }
+        }));
+        this.cardAddAnimation.setCycleCount(allLobbies.size());
+        this.cardAddAnimation.play();
+    }
+
+    //private List<Button>
+
     private void generateLobby() {
         if (this.isConnected) {
             this.cardAddAnimation.stop();
@@ -190,25 +227,16 @@ public class Controller {
             flowPane.setPadding(this.insets);
 
             if(!this.userLobbies.isEmpty()) {
-                List<LobbyButton> allLobbies = new ArrayList<>();
+                List<Button> allLobbies = new ArrayList<>();
                 userLobbies.forEach((k, v) -> {
+
                     LobbyButton cardInvenotryButton = new LobbyButton(k, v);
                     cardInvenotryButton.setOnAction(e -> {
                         invokeLobbyEnter(cardInvenotryButton);
                     });
                     allLobbies.add(cardInvenotryButton);
-
                 });
-                this.cardAddAnimation = new Timeline(new KeyFrame(Duration.seconds(0.1), new EventHandler<ActionEvent>() {
-                    int index = 0;
-
-                    @Override
-                    public void handle(ActionEvent event) {
-                        flowPane.getChildren().add(allLobbies.get(index++));
-                    }
-                }));
-                this.cardAddAnimation.setCycleCount(allLobbies.size());
-                this.cardAddAnimation.play();
+                this.addButtonToPaneAnimation(allLobbies);
             }
         }
     }
@@ -221,8 +249,9 @@ public class Controller {
             this.cardAddAnimation.setOnFinished(e->{});
             flowPane.getChildren().clear();
             flowPane.setPadding(this.insets);
+
             if (!this.userCardsInventory.isEmpty()) {
-                List<CardInvenotryButton> allCards = new ArrayList<>();
+                List<Button> allCards = new ArrayList<>();
                 userCardsInventory.forEach((k, v) -> {
                     CardInvenotryButton cardInvenotryButton = new CardInvenotryButton(k, v);
                     cardInvenotryButton.setOnAction(e -> {
@@ -230,21 +259,29 @@ public class Controller {
                     });
                     allCards.add(cardInvenotryButton);
                 });
-                this.cardAddAnimation = new Timeline(new KeyFrame(Duration.seconds(0.1), new EventHandler<ActionEvent>() {
-                    int i = 0;
 
-                    @Override
-                    public void handle(ActionEvent event) {
-                        flowPane.getChildren().add(allCards.get(i++));
-                    }
-                }));
-                this.cardAddAnimation.setCycleCount(allCards.size());
-                this.cardAddAnimation.play();
+                this.addButtonToPaneAnimation(allCards);
             }
         }
     }
-    private void invokeLobbyEnter(LobbyButton cardInvenotryButton) {
 
+    private void invokeLobbyEnter(LobbyButton lobbyButton) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LobbyEnteredFXML/LobbyEnter.fxml"));
+            Parent hbox = loader.load();
+            LobbyEnterContoller controller = loader.getController();
+            Scene scene = new Scene(hbox, 757, 324);
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.getIcons().add(new Image("file:" + System.getProperty("user.dir")+"\\"+"source\\"+"lobbyIcon2.jpg"));
+            stage.setScene(scene);
+            stage.setTitle("Make Your Bets");
+            controller.setData(lobbyButton,this);
+            stage.show();
+
+        }catch (IOException ignore) {
+
+        }
     }
 
     private void invokeCardSelling(CardInvenotryButton cardInvenotryButton) {
@@ -262,8 +299,6 @@ public class Controller {
             sendToServer("CARD_LAST_PRICES "+ card_ID);
             controller.setData(cardInvenotryButton,this);
             stage.show();
-
-
 
         }catch (IOException ignore) {
 
@@ -326,8 +361,9 @@ public class Controller {
                             Platform.runLater(() -> {connected(false);});
                      }
 
+
                     if(str[0].equals("INVENTORY")) {
-                         line = line.substring(10);
+                        line = line.substring(10);
                         if(!line.equals("")) {
                             List<String> cardsList = Arrays.asList(line.split("#"));
                             for (String cardStr : cardsList) {
@@ -340,6 +376,7 @@ public class Controller {
                     if(str[0].equals("HISTORY")) {
                         line = line.substring(8);
                         if(!line.equals("")) {
+                            userSalesHistory.clear();
                             List<String> historyList = Arrays.asList(line.split("#"));
                             for (String historyStr : historyList) {
                                 userSalesHistory.add(new SaleStory(historyStr));
@@ -348,22 +385,71 @@ public class Controller {
                     }
 
                     if(str[0].equals("LOBBIES")) {
-
-                    }
-                    if(str[0].equals("LOBBY_NEW")) {
-                        for (String str1 : line.split(" ")){
-                            System.out.println(str1);
+                        line = line.substring(8);
+                        if(!line.equals("")){
+                            List<String> lineLobby = Arrays.asList(line.split("#"));
+                            for(String wrt : lineLobby){
+                                Integer lobby_ID = Integer.parseInt(wrt.split("::")[0]);
+                                userLobbies.put(lobby_ID,DefaultLobby.castToLobby(wrt.split("::")[1]));
+                            }
                         }
-                            DefaultLobby defaultLobby = new DefaultLobby(str[2],str[3],str[4].replace("#"," "),str[5]);
-                            userLobbies.put(Integer.parseInt(str[1]) ,defaultLobby);
-                           // Platform.runLater( ()-> generateLobby());
                     }
+                    if(str[0].equals("ALL_BETS")) {
+                        line = line.substring(9);
+                        if(!line.equals("")){
+                            List<String> lobbyBets = Arrays.asList(line.split("#"));
+                            for(String lobbyBet : lobbyBets){
+                                List<String> result = new ArrayList<>();
+                                Integer lobby_ID = Integer.parseInt(lobbyBet.split("::")[0]);
+                                List<String> bets = Arrays.asList(lobbyBet.split("::")[1].split(";"));
+                                for(String bet : bets) {
+                                    String userName = bet.split(",")[0];
+                                    String userBet = bet.split(",")[1];
+                                    String resultStr = String.format("%-4s", "| UserName : " + userName + " -----> ") + String.format("%-5s", " Bet : " + userBet) + String.format("%-5s", "|");
+                                    result.add(resultStr);
+                                     }
+                                lobbiesBets.put(lobby_ID,result);
+                            }
+                        }
+                    }
+
+                    if(str[0].equals("LOBBY_NEW")) {
+                        handleNewLobby(str);
+                    }
+                    if(str[0].equals("CARD_NEW")) {
+                        line = line.substring(9);
+                        if(!line.equals("")) {
+                            handleNewCard(line);
+                        }
+                    }
+                    if(str[0].equals("CARD_BACK")) {
+                        disableInventoryButton(Integer.parseInt(str[1]),false);
+                    }
+
                     if(str[0].equals("CARD_DEL")) {
                         Platform.runLater(() -> deleteButtonFromPaneAndList(CardInvenotryButton.class , str[1]));
                     }
-
                     if(str[0].equals("LOBBY_DEL")) {
                         Platform.runLater(() -> deleteButtonFromPaneAndList(LobbyButton.class , str[1]));
+                        lobbiesBets.remove(Integer.parseInt(str[1]));
+                    }
+
+                    if(str[0].equals("LOBBY_BET")){
+                        Integer lobby_ID = Integer.parseInt(str[1]);
+                        Integer bet = Integer.parseInt(str[2]);
+                        String  userName = str[3];
+                        List<String> lobbyBets = new ArrayList<>();
+                        if(lobbiesBets.entrySet().stream().anyMatch(e -> e.getKey() == lobby_ID)) {
+                            lobbiesBets.entrySet().stream()
+                                    .filter(e -> e.getKey() == lobby_ID)
+                                    .map(Map.Entry::getValue)
+                                    .findFirst()
+                                    .get().forEach(e -> lobbyBets.add(e));
+                        }
+                        String str1 = String.format("%-4s","| UserName : " + userName +" -----> ") + String.format("%-5s"," Bet : " + bet)+String.format("%-5s","|") ;
+                        lobbyBets.add(str1);
+                        lobbiesBets.put(lobby_ID,lobbyBets);
+
                     }
                     if(str[0].equals("CARD_PRICE_HISTORY")) {
                         Integer card_ID = Integer.parseInt(str[1]);
@@ -382,8 +468,17 @@ public class Controller {
                     }
 
                     if(str[0].equals("STANDART_PACKET_END")) {
-                        Platform.runLater(() -> { generateInventory();});
-                        //Platform.runLater(() -> { generateLobby();});
+                        if(userLobbies.isEmpty()) {
+                            this.status = Status.INVENOTRY;
+                            Platform.runLater(() -> {
+                                generateInventory();
+                            });
+                        }else {
+                            this.status = Status.LOBBIES;
+                            Platform.runLater(() -> {
+                                generateLobby();
+                            });
+                        }
                     }
 
 
@@ -416,6 +511,31 @@ public class Controller {
 
     }
 
+    private void handleNewCard(String str) { //67::Dooku,193,fair,102BBY,male#
+        Integer cardID = Integer.parseInt(str.split("::")[0]);
+        DefaultCard defaultCard = DefaultCard.castToCard(str.split("::")[1]);
+        userCardsInventory.put(cardID,defaultCard);
+        if(this.status == Status.INVENOTRY){
+            CardInvenotryButton cardInvenotryButton = new CardInvenotryButton(cardID,defaultCard);
+            cardInvenotryButton.setOnAction(e->invokeCardSelling(cardInvenotryButton));
+            Platform.runLater(()->{
+                addButtonToPaneAnimation(List.of((Button)cardInvenotryButton));
+            });
+        }
+    }
+
+    private void handleNewLobby(String str[]) {
+        DefaultLobby defaultLobby = new DefaultLobby(str[2],str[3].replace("&"," "),str[4],str[5]);
+        userLobbies.put(Integer.parseInt(str[1]) ,defaultLobby);
+        if(this.status == Status.LOBBIES) {
+            LobbyButton lobbyButton = new LobbyButton(Integer.parseInt(str[1]),defaultLobby);
+            lobbyButton.setOnAction(e->{invokeLobbyEnter(lobbyButton);});
+            Platform.runLater(() -> {
+                addButtonToPaneAnimation(List.of((Button) lobbyButton));
+            });
+        }
+    }
+
     private  void deleteButtonFromPaneAndList(Class<?> classVrt, String id) {
         Integer button_ID = Integer.parseInt(id);
         Node flowNode = flowPane.getChildren().get(0);
@@ -427,7 +547,8 @@ public class Controller {
                for (Iterator<Node> it = flowPane.getChildren().iterator(); it.hasNext(); ) {
                    Node node = it.next();
                    if( ((CardInvenotryButton) node).getDefaultCard().hashCode() ==cardToDelte.hashCode()){
-                       flowPane.getChildren().remove(node);
+                       //flowPane.getChildren().remove(node);
+                       deleteFromPaneAnimation(((CardInvenotryButton) node));
                    }
                }
            }
@@ -435,7 +556,6 @@ public class Controller {
         if (LobbyButton.class == (classVrt)) {
            DefaultLobby lobbyToRemove =  userLobbies.remove(button_ID);
             if(flowNode instanceof  LobbyButton){
-
                 for (Iterator<Node> it = flowPane.getChildren().iterator(); it.hasNext(); ) {
                     Node node = it.next();
                     if( ((LobbyButton) node).getDefaultLobby().hashCode() == lobbyToRemove.hashCode()){
@@ -501,7 +621,8 @@ public class Controller {
 
 
     private void alertWindow(String contentText){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label)node).setMinHeight(Region.USE_PREF_SIZE));
         alert.setTitle("Alert");
         alert.setHeaderText(null);
         alert.setContentText(contentText);

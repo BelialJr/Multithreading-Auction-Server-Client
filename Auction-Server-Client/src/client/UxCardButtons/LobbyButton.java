@@ -23,7 +23,7 @@ public class LobbyButton extends Button {
         this.textAlignmentProperty().set(TextAlignment.CENTER);
         this.setPrefSize(WIDTH,HEiGHT);
         String cardName = lobby.getCardName();
-        String biggestBet = "BIGGEST BET "+ "\n" + "0";
+        String biggestBet = "START BET "+ "\n" + lobby.getPrice();
         TimeLines.configureButton(this);
 
         LocalTime currentTime = lobby.getCurrentTime();

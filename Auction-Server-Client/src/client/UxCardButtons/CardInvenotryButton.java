@@ -41,7 +41,7 @@ public class CardInvenotryButton extends Button {
         this.defaultCard = defaultCard;
         TimeLines.configureButton(this);
         if(defaultCard.isDisable())
-            this.setDisable(true);
+        this.setDisable(true);
     }
 
 

@@ -132,7 +132,7 @@ public class SellCardContoller {
                 node.setDisable(true);
             }
         }),
-                new KeyFrame(Duration.seconds(2)));
+                new KeyFrame(Duration.seconds(1)));
 
         this.timelineLoading.setOnFinished(event -> {
             Stage stage = (Stage) sellButton.getScene().getWindow();

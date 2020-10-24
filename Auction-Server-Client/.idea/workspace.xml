@@ -2,32 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/server/Lobbie/Lobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/jfoenix_9_0_10.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/jfoenix_9_0_10.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/SQLiteDB.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Auction-Server-Client/client/LogInFXML/logInSample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Auction-Server-Client/client/LogInFXML/logInSample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Auction-Server-Client/client/SellCardFXML/SellCard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Auction-Server-Client/client/SellCardFXML/SellCard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Auction-Server-Client/client/clientSample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Auction-Server-Client/client/clientSample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Auction-Server-Client/server/serverSample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Auction-Server-Client/server/serverSample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/CardInvenotryButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/UxCardButtons/CardInvenotryButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/SQLiteDB.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/SQLiteDB.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/enekin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/enekin2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/enekin3.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/LogInFXML/LogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/LogInFXML/LogController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/LogInFXML/logInSample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/LogInFXML/logInSample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/SellCardFXML/SellCard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/SellCardFXML/SellCard.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/SellCardFXML/SellCardContoller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/SellCardFXML/SellCardContoller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/SellCardFXML/main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/clientSample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/clientSample.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/UxCardButtons/CardInvenotryButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/UxCardButtons/CardInvenotryButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/UxCardButtons/DefaultLobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/UxCardButtons/DefaultLobby.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/UxCardButtons/LobbyButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/UxCardButtons/LobbyButton.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/maain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/maain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Contoller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Contoller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/DbHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/DbHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/DefaultCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/DefaultCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Lobbie.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/LobbiesHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Lobbie/LobbiesHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Lobbie/LobbiesHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Lobbie/LobbiesHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Lobbie/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Lobbie/Lobby.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/UserConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/UserConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/serverSample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/serverSample.fxml" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,6 +26,12 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/Auction_Server_Client$Client2.ic" NAME="Client2 Coverage Results" MODIFIED="1603451331099" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="206" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -103,47 +98,80 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/client/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-599">
-              <caret line="319" column="29" selection-start-line="319" selection-start-column="29" selection-end-line="319" selection-end-column="29" />
+            <state relative-caret-position="234">
+              <caret line="112" selection-start-line="112" selection-end-line="112" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3064#3065#0" expanded="true" />
-                <element signature="e#3131#3132#0" expanded="true" />
-                <element signature="e#3100#3101#0" expanded="true" />
-                <element signature="e#3173#3174#0" expanded="true" />
-                <element signature="e#3215#3216#0" expanded="true" />
-                <element signature="e#3282#3283#0" expanded="true" />
-                <element signature="e#6948#6949#0" expanded="true" />
-                <element signature="e#7043#7044#0" expanded="true" />
-                <element signature="e#7274#7275#0" expanded="true" />
-                <element signature="e#7359#7360#0" expanded="true" />
-                <element signature="e#18600#18601#0" expanded="true" />
-                <element signature="e#19233#19410#0" expanded="true" />
-                <element signature="e#19409#19410#0" expanded="true" />
+                <element signature="e#24330#24331#0" expanded="true" />
+                <element signature="e#25510#25687#0" expanded="true" />
+                <element signature="e#25686#25687#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/client/UxCardButtons/DefaultLobby.java">
+        <entry file="file://$PROJECT_DIR$/src/server/Lobbie/LobbiesHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
-              <caret line="16" selection-start-line="16" selection-end-line="16" />
+            <state relative-caret-position="351">
+              <caret line="88" column="65" selection-start-line="88" selection-start-column="65" selection-end-line="88" selection-end-column="65" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#4997#4998#0" expanded="true" />
+                <element signature="e#5048#5049#0" expanded="true" />
+                <element signature="e#5118#5119#0" expanded="true" />
+                <element signature="e#5172#5173#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/server/Lobbie/LobbiesHandler.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/server/Lobbie/Lobby.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="46" column="181" selection-start-line="46" selection-start-column="181" selection-end-line="46" selection-end-column="181" />
+            <state relative-caret-position="288">
+              <caret line="54" column="20" selection-start-line="54" selection-start-column="20" selection-end-line="54" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#4800#4801#0" expanded="true" />
+                <element signature="e#4832#4833#0" expanded="true" />
+                <element signature="e#4882#4883#0" expanded="true" />
+                <element signature="e#4924#4925#0" expanded="true" />
+                <element signature="e#4959#4960#0" expanded="true" />
+                <element signature="e#4990#4991#0" expanded="true" />
+                <element signature="e#5038#5039#0" expanded="true" />
+                <element signature="e#5078#5079#0" expanded="true" />
+                <element signature="e#5115#5116#0" expanded="true" />
+                <element signature="e#5145#5146#0" expanded="true" />
+                <element signature="e#5191#5192#0" expanded="true" />
+                <element signature="e#5229#5230#0" expanded="true" />
+                <element signature="e#5268#5269#0" expanded="true" />
+                <element signature="e#5302#5303#0" expanded="true" />
+                <element signature="e#5357#5358#0" expanded="true" />
+                <element signature="e#5403#5404#0" expanded="true" />
+                <element signature="e#5440#5441#0" expanded="true" />
+                <element signature="e#5472#5473#0" expanded="true" />
+                <element signature="e#5523#5524#0" expanded="true" />
+                <element signature="e#5565#5566#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/server/UserConnection.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="253">
+              <caret line="89" column="16" selection-start-line="89" selection-start-column="8" selection-end-line="89" selection-end-column="16" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#3560#3561#0" expanded="true" />
+                <element signature="e#3624#3625#0" expanded="true" />
+                <element signature="e#5393#5394#0" expanded="true" />
+                <element signature="e#5439#5440#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -161,36 +189,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Defa</find>
-      <find>Default</find>
-      <find>syste</find>
-      <find>System</find>
-      <find>System.out</find>
-      <find>System.out.println</find>
-      <find>System.out.pri</find>
-      <find>Syste</find>
-      <find>Pane</find>
-      <find>Sys</find>
-      <find>sendCard</find>
-      <find>userSalesHistory</find>
-      <find>selectedHourLabel</find>
-      <find>createHoursContent</find>
-      <find>periodAMLabel</find>
-      <find>hoursContent</find>
-      <find>pointerRotate</find>
-      <find>Time</find>
-      <find>genera</find>
       <find>userCardsInventoryHistory</find>
-      <find>gene</find>
       <find>logIn</find>
       <find>priceField</find>
       <find>ScheduledFuture</find>
       <find>generateLo</find>
       <find>userCardsHistory</find>
-      <find>userCardsInventory</find>
       <find>flowPane</find>
       <find>dele</find>
       <find>cardAddAnimation</find>
+      <find>LobbyButton</find>
+      <find>this.status</find>
+      <find>gene</find>
+      <find>backButton</find>
+      <find>Status.STOPPED</find>
+      <find>userConnection.sendToAllLogedUsers.accept</find>
+      <find>send</find>
+      <find>lobbiesBets</find>
+      <find>userLobbies</find>
+      <find>maxBet</find>
+      <find>getLobbeisInfo</find>
+      <find>userCardsInventory</find>
+      <find>userCard</find>
+      <find>addButtonToPaneAnimation</find>
+      <find>defaultCard</find>
+      <find>disableInventoryButton</find>
+      <find>deleteButtonFromPaneAndList</find>
+      <find>betsMap.get(userID)</find>
+      <find>betsInfo</find>
+      <find>UPDATE</find>
+      <find>lobbiesBetsInt</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -204,11 +232,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/client/LogInFXML/TimeLines.java" />
-        <option value="$PROJECT_DIR$/src/server/StarWarsAPI/CardsLoader.java" />
-        <option value="$PROJECT_DIR$/src/client/LogInFXML/CardButton.java" />
-        <option value="$PROJECT_DIR$/src/client/CardImage/ImageLoader.java" />
-        <option value="$PROJECT_DIR$/src/server/StarWarsAPI/StarWarsApi.java" />
         <option value="$PROJECT_DIR$/src/server/StarWarsAPI/StarWarsApiV2.java" />
         <option value="$PROJECT_DIR$/src/client/CardInvenotryButton.java" />
         <option value="$PROJECT_DIR$/src/client/SellCardFXML/main.java" />
@@ -230,8 +253,6 @@
         <option value="$PROJECT_DIR$/src/client/SellCardFXML/SellCardV2.fxml" />
         <option value="$PROJECT_DIR$/src/server/Main.java" />
         <option value="$PROJECT_DIR$/src/client/SellCardContoller.java" />
-        <option value="$PROJECT_DIR$/src/server/DefaultCard.java" />
-        <option value="$PROJECT_DIR$/src/client/UxCardButtons/CardInvenotryButton.java" />
         <option value="$PROJECT_DIR$/src/client/LogInFXML/logInSample.fxml" />
         <option value="$PROJECT_DIR$/src/client/clientSample.fxml" />
         <option value="$PROJECT_DIR$/src/client/Sellcard/SellCardContoller.java" />
@@ -243,18 +264,25 @@
         <option value="$PROJECT_DIR$/src/server/Server.java" />
         <option value="$PROJECT_DIR$/src/server/Lobbie/Lobbie.java" />
         <option value="$PROJECT_DIR$/src/client/UxCardButtons/LobbieInvenotryButton.java" />
-        <option value="$PROJECT_DIR$/src/server/UserConnection.java" />
         <option value="$PROJECT_DIR$/src/client/UxCardButtons/LobbyInvenotryButton.java" />
         <option value="$PROJECT_DIR$/src/client/UxCardButtons/DefaultCard.java" />
         <option value="$PROJECT_DIR$/src/client/UxCardButtons/DefaulLobby.java" />
+        <option value="$PROJECT_DIR$/src/client/TimeLines.java" />
+        <option value="$PROJECT_DIR$/src/client/LobbyEntered/LobbyEnter.fxml" />
+        <option value="$PROJECT_DIR$/src/client/LobbyEntered/LobbyEnterContoller.java" />
+        <option value="$PROJECT_DIR$/src/server/DefaultCard.java" />
+        <option value="$PROJECT_DIR$/src/client/UxCardButtons/CardInvenotryButton.java" />
+        <option value="$PROJECT_DIR$/src/client/SellCardFXML/SellCardContoller.java" />
+        <option value="$PROJECT_DIR$/src/client/UxCardButtons/DefaultLobby.java" />
+        <option value="$PROJECT_DIR$/src/client/LobbyEnteredFXML/LobbyEnter.fxml" />
+        <option value="$PROJECT_DIR$/src/server/UserConnection.java" />
+        <option value="$PROJECT_DIR$/src/client/maain.java" />
         <option value="$PROJECT_DIR$/src/server/DbHandler.java" />
         <option value="$PROJECT_DIR$/src/client/UxCardButtons/LobbyButton.java" />
-        <option value="$PROJECT_DIR$/src/client/TimeLines.java" />
-        <option value="$PROJECT_DIR$/src/client/SellCardFXML/SellCardContoller.java" />
-        <option value="$PROJECT_DIR$/src/client/maain.java" />
-        <option value="$PROJECT_DIR$/src/client/UxCardButtons/DefaultLobby.java" />
-        <option value="$PROJECT_DIR$/src/client/Controller.java" />
+        <option value="$PROJECT_DIR$/src/client/LobbyEnteredFXML/LobbyEnterContoller.java" />
+        <option value="$PROJECT_DIR$/src/server/Lobbie/Lobby.java" />
         <option value="$PROJECT_DIR$/src/server/Lobbie/LobbiesHandler.java" />
+        <option value="$PROJECT_DIR$/src/client/Controller.java" />
       </list>
     </option>
   </component>
@@ -274,12 +302,19 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="Auction-Server-Client" type="b2602c69:ProjectViewProjectNode" />
               <item name="Auction-Server-Client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Auction-Server-Client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Auction-Server-Client" type="462c0819:PsiDirectoryNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Auction-Server-Client" type="b2602c69:ProjectViewProjectNode" />
@@ -291,6 +326,13 @@
               <item name="Auction-Server-Client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Auction-Server-Client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Auction-Server-Client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="LobbyEnteredFXML" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Auction-Server-Client" type="b2602c69:ProjectViewProjectNode" />
@@ -331,15 +373,19 @@
               <item name="Auction-Server-Client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="Lobbie" type="462c0819:PsiDirectoryNode" />
-              <item name="LobbiesHandler.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+              <item name="StarWarsAPI" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Auction-Server-Client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Auction-Server-Client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="TableViewCLasses" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -352,9 +398,9 @@
     <property name="OverrideImplement.combined" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1603236000379" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1603561101574" />
     <property name="dynamic.classpath" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../1PPJV2.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.14924182" />
@@ -363,27 +409,27 @@
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\source" />
-      <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\src\client\LogInFXML" />
-      <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\src\server" />
-      <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\lib\jFoenix" />
-      <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\lib" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="client" />
+      <recent name="server" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\source" />
+      <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\src\client\LobbyEntered" />
       <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\src\client\Sellcard" />
       <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\src\client\SellCardFXML" />
-      <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\source" />
       <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\src\client" />
-      <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\src\server\images" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="client.UxCardButtons" />
       <recent name="client.Sellcard" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="client" />
-      <recent name="server" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\source" />
+      <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\source\lobbyIcon2" />
+      <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\src\client\LogInFXML" />
+      <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\src\server" />
+      <recent name="C:\Users\mrrom\Desktop\Multithreading-Auction-Server-Client\Auction-Server-Client\lib\jFoenix" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -403,7 +449,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Server">
+  <component name="RunManager" selected="Application.Client2">
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -560,10 +606,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Server" />
         <item itemvalue="Application.Client1" />
-        <item itemvalue="Application.maain" />
+        <item itemvalue="Application.Server" />
         <item itemvalue="Application.DbHandler" />
+        <item itemvalue="Application.maain" />
         <item itemvalue="Application.main" />
       </list>
     </recent_temporary>
@@ -593,12 +639,17 @@
       <workItem from="1603124706112" duration="231000" />
       <workItem from="1603124968343" duration="951000" />
       <workItem from="1603125952339" duration="7618000" />
-      <workItem from="1603174789882" duration="46929000" />
+      <workItem from="1603174789882" duration="47704000" />
+      <workItem from="1603266148728" duration="3323000" />
+      <workItem from="1603269741467" duration="1736000" />
+      <workItem from="1603271715652" duration="91000" />
+      <workItem from="1603275376106" duration="1716000" />
+      <workItem from="1603278395527" duration="88103000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="239215000" />
+    <option name="totallyTimeSpent" value="334959000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -613,7 +664,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.15167785" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.16577181" />
       <window_info id="Structure" order="1" weight="0.24966443" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
@@ -622,8 +673,47 @@
       <window_info id="Capture Tool" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3711048" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.18696883" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.23087819" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.34702548" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
+      <window_info anchor="bottom" id="Application Servers" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Problems" order="9" />
+      <window_info anchor="bottom" id="Changes" order="10" />
+      <window_info anchor="bottom" id="Profiler" order="11" />
+      <window_info anchor="bottom" id="Event Log" order="12" weight="0.32936078" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.26203966" />
+      <window_info anchor="bottom" id="Terminal" order="14" />
+      <window_info anchor="bottom" id="Docker" order="15" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="16" weight="0.3286119" />
+      <window_info anchor="bottom" id="Regex Tester" order="17" />
+      <window_info anchor="right" id="Coverage" side_tool="true" weight="0.3295302" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="JetGradle" order="3" />
+      <window_info anchor="right" id="Database" order="4" weight="0.3295302" />
+      <window_info anchor="right" id="Palette" order="5" />
+      <window_info anchor="right" id="Maven Projects" order="6" />
+      <window_info anchor="right" id="Maven" order="7" />
+      <window_info anchor="right" id="Capture Analysis" order="8" />
+      <window_info anchor="right" id="Palette&#9;" order="9" />
+      <window_info anchor="right" id="Theme Preview" order="10" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.16174497" />
+      <window_info id="Structure" order="1" weight="0.24966443" />
+      <window_info id="Favorites" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="Image Layers" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33144477" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.2592068" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
@@ -649,44 +739,6 @@
       <window_info anchor="right" id="Capture Analysis" order="8" />
       <window_info anchor="right" id="Palette&#9;" order="9" />
       <window_info anchor="right" id="Theme Preview" order="10" />
-    </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.15570469" />
-      <window_info id="Structure" order="1" weight="0.24966443" />
-      <window_info id="Favorites" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="Image Layers" order="4" />
-      <window_info id="UI Designer" order="5" />
-      <window_info id="Capture Tool" order="6" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.23654391" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.32294616" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
-      <window_info anchor="bottom" id="Application Servers" order="7" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Problems" order="9" />
-      <window_info anchor="bottom" id="Changes" order="10" />
-      <window_info anchor="bottom" id="Profiler" order="11" />
-      <window_info anchor="bottom" id="Event Log" order="12" weight="0.32936078" />
-      <window_info anchor="bottom" id="Messages" order="13" weight="0.3286119" />
-      <window_info anchor="bottom" id="Terminal" order="14" />
-      <window_info anchor="bottom" id="Docker" order="15" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" order="16" />
-      <window_info anchor="bottom" id="Regex Tester" order="17" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="JetGradle" order="3" />
-      <window_info anchor="right" id="Database" order="4" weight="0.3295302" />
-      <window_info anchor="right" id="Palette" order="5" />
-      <window_info anchor="right" id="Maven Projects" order="6" />
-      <window_info anchor="right" id="Maven" order="7" />
-      <window_info anchor="right" id="Capture Analysis" order="8" />
-      <window_info anchor="right" id="Palette&#9;" order="9" />
-      <window_info anchor="right" id="Theme Preview" order="10" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -696,252 +748,24 @@
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/client/UxCardButtons/LobbyButton.java</url>
-          <line>14</line>
-          <properties />
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/client/Controller.java</url>
-          <line>418</line>
-          <properties class="client.Controller" method="deleteButtonFromPaneAndList">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/client/Sellcard/SellCardContollerV2.java" />
-    <entry file="file://$PROJECT_DIR$/src/client/LogInFXML/LogController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="40" column="78" selection-start-line="40" selection-start-column="78" selection-end-line="40" selection-end-column="78" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/SaleStory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="60" column="38" lean-forward="true" selection-start-line="60" selection-start-column="38" selection-end-line="60" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.base/javafx/event/Event.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="198" selection-start-line="198" selection-end-line="198" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.graphics/javafx/scene/Scene.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="708">
-          <caret line="3872" column="35" lean-forward="true" selection-start-line="3872" selection-start-column="35" selection-end-line="3872" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.controls/javafx/scene/control/TextField.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="105" selection-start-line="105" selection-end-line="105" />
-          <folding>
-            <element signature="e#3238#3239#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.base/javafx/beans/binding/StringExpression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
-          <folding>
-            <element signature="e#1141#1142#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.controls/javafx/scene/control/TextInputControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="1414" selection-start-line="1414" selection-end-line="1414" />
-          <folding>
-            <element signature="e#52213#52214#0" expanded="true" />
-            <element signature="e#52262#52263#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.controls/javafx/scene/control/ButtonBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="49" column="22" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.controls/javafx/scene/control/Button.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="74" column="32" lean-forward="true" selection-start-line="74" selection-start-column="32" selection-end-line="74" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ideaLibSources/jfoenix-9.0.10-sources.jar!/com/jfoenix/controls/JFXButton.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="46" column="34" lean-forward="true" selection-start-line="46" selection-start-column="34" selection-end-line="46" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.graphics/javafx/scene/Node.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="1795" column="5" lean-forward="true" selection-start-line="1795" selection-start-column="5" selection-end-line="1795" selection-end-column="5" />
-          <folding>
-            <element signature="e#55085#55086#0" expanded="true" />
-            <element signature="e#55129#55130#0" expanded="true" />
-            <element signature="e#71645#71646#0" expanded="true" />
-            <element signature="e#71689#71690#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/SellCardFXML/SellCard.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="49" column="54" selection-start-line="49" selection-start-column="46" selection-end-line="49" selection-end-column="54" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
-    <entry file="jar://$USER_HOME$/.ideaLibSources/jfoenix-9.0.10-sources.jar!/com/jfoenix/controls/JFXTimePicker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="54" column="13" selection-start-line="54" selection-start-column="13" selection-end-line="54" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.33186/Request.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="20" column="49" selection-start-line="20" selection-start-column="44" selection-end-line="20" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.37143/RequestInitializer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.37892/RequestFiller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-598">
-          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.36668/Response.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="23" column="4" lean-forward="true" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.47094/Response.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="22" column="5" lean-forward="true" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.49814/Request.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-240" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.42409/RequestBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="56" column="27" lean-forward="true" selection-start-line="56" selection-start-column="27" selection-end-line="56" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.40062/Request.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="22" column="26" lean-forward="true" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.19098/Response.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="15" column="31" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
-          <folding>
-            <element signature="e#337#338#0" expanded="true" />
-            <element signature="e#366#367#0" expanded="true" />
-            <element signature="e#396#397#0" expanded="true" />
-            <element signature="e#417#418#0" expanded="true" />
-            <element signature="e#441#442#0" expanded="true" />
-            <element signature="e#459#460#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.15913/RequestFiller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="22" column="20" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
-          <folding>
-            <element signature="e#219#220#0" expanded="true" />
-            <element signature="e#248#249#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.5243/RequestBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-272">
-          <caret line="7" column="55" selection-start-line="7" selection-start-column="48" selection-end-line="7" selection-end-column="55" />
-          <folding>
-            <element signature="e#392#393#0" expanded="true" />
-            <element signature="e#417#418#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.40181/RequestFiller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="10" column="34" lean-forward="true" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
-          <folding>
-            <element signature="e#219#220#0" expanded="true" />
-            <element signature="e#248#249#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.43484/RequestBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="28" column="9" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.33186/Request.java" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.37143/RequestInitializer.java" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.37892/RequestFiller.java" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.36668/Response.java" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.47094/Response.java" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.49814/Request.java" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.42409/RequestBuilder.java" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.40062/Request.java" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.19098/Response.java" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.15913/RequestFiller.java" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.5243/RequestBuilder.java" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.40181/RequestFiller.java" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa17032.43484/RequestBuilder.java" />
     <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/java/util/concurrent/ExecutorService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="142">
@@ -970,53 +794,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="63" column="52" selection-start-line="63" selection-start-column="52" selection-end-line="63" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1088#1089#0" expanded="true" />
-            <element signature="e#1144#1145#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/UxCardButtons/DefaultCard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/Lobbie/Lobby.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/DbHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="332" column="29" lean-forward="true" selection-start-line="332" selection-start-column="29" selection-end-line="332" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/DefaultCard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/java/util/Map.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="302" column="6" selection-start-line="302" selection-start-column="6" selection-end-line="302" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/java/util/List.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="178">
@@ -1028,24 +805,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="178">
           <caret line="65" column="12" selection-start-line="65" selection-start-column="12" selection-end-line="65" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/UxCardButtons/CardInvenotryButton.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="41" column="8" lean-forward="true" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/UserConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-          <folding>
-            <element signature="e#3365#3366#0" expanded="true" />
-            <element signature="e#3397#3398#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1068,18 +827,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/UxCardButtons/LobbyButton.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="34" column="81" lean-forward="true" selection-start-line="34" selection-start-column="81" selection-end-line="34" selection-end-column="81" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1969#1970#0" expanded="true" />
-            <element signature="e#2004#2005#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="296">
@@ -1097,62 +844,253 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/SellCardFXML/SellCardContoller.java">
+    <entry file="file://$PROJECT_DIR$/../../cc-warc-examples-master/src/org/commoncrawl/warc/WARCFileInputFormat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="134" column="51" selection-start-line="134" selection-start-column="16" selection-end-line="134" selection-end-column="51" />
+        <state relative-caret-position="32">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/maain.java">
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.controls/javafx/scene/control/Button.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="93" column="57" selection-start-line="93" selection-start-column="57" selection-end-line="93" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="187">
+          <caret line="74" column="13" selection-start-line="74" selection-start-column="13" selection-end-line="74" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.base/com/sun/javafx/event/EventDispatchChainImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="125" column="29" lean-forward="true" selection-start-line="125" selection-start-column="29" selection-end-line="125" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/SellCardFXML/SellCard.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="49" column="54" selection-start-line="49" selection-start-column="46" selection-end-line="49" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/enekin.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/enekin2.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/enekin3.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/icon2.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/lobbyIcon.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/UxCardButtons/DefaultCard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.base/javafx/util/Duration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="128" column="27" selection-start-line="128" selection-start-column="27" selection-end-line="128" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.graphics/com/sun/javafx/tk/Toolkit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="290" selection-start-line="290" selection-end-line="290" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/UxCardButtons/DefaultLobby.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        <state relative-caret-position="272">
+          <caret line="35" column="1" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/Controller.java">
+    <entry file="file://$PROJECT_DIR$/src/client/SellCardFXML/SellCardContoller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-599">
-          <caret line="319" column="29" selection-start-line="319" selection-start-column="29" selection-end-line="319" selection-end-column="29" />
+        <state relative-caret-position="-67">
+          <caret line="67" selection-start-line="67" selection-end-line="67" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3064#3065#0" expanded="true" />
-            <element signature="e#3131#3132#0" expanded="true" />
-            <element signature="e#3100#3101#0" expanded="true" />
-            <element signature="e#3173#3174#0" expanded="true" />
-            <element signature="e#3215#3216#0" expanded="true" />
-            <element signature="e#3282#3283#0" expanded="true" />
-            <element signature="e#6948#6949#0" expanded="true" />
-            <element signature="e#7043#7044#0" expanded="true" />
-            <element signature="e#7274#7275#0" expanded="true" />
-            <element signature="e#7359#7360#0" expanded="true" />
-            <element signature="e#18600#18601#0" expanded="true" />
-            <element signature="e#19233#19410#0" expanded="true" />
-            <element signature="e#19409#19410#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/LobbyEnteredFXML/LobbyEnter.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="15" column="169" selection-start-line="15" selection-start-column="169" selection-end-line="15" selection-end-column="169" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/UxCardButtons/CardInvenotryButton.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="35" column="45" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="45" />
+          <folding>
+            <element signature="e#473#474#0" expanded="true" />
+            <element signature="e#501#502#0" expanded="true" />
+            <element signature="e#531#532#0" expanded="true" />
+            <element signature="e#560#561#0" expanded="true" />
+            <element signature="e#603#604#0" expanded="true" />
+            <element signature="e#637#638#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.graphics/javafx/application/Platform.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="150" selection-start-line="150" selection-end-line="150" />
+          <folding>
+            <element signature="e#5863#5864#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/java/util/Map.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="242" column="9" selection-start-line="242" selection-start-column="6" selection-end-line="242" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="58" column="108" selection-start-line="58" selection-start-column="94" selection-end-line="58" selection-end-column="108" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/DefaultCard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/maain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="41" column="50" selection-start-line="41" selection-start-column="50" selection-end-line="41" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1395#1410#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/DbHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="468" column="56" selection-start-line="468" selection-start-column="56" selection-end-line="468" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/UserConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="89" column="16" selection-start-line="89" selection-start-column="8" selection-end-line="89" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3560#3561#0" expanded="true" />
+            <element signature="e#3624#3625#0" expanded="true" />
+            <element signature="e#5393#5394#0" expanded="true" />
+            <element signature="e#5439#5440#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/UxCardButtons/LobbyButton.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="25" column="66" lean-forward="true" selection-start-line="25" selection-start-column="66" selection-end-line="25" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/LobbyEnteredFXML/LobbyEnterContoller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="912">
+          <caret line="117" column="80" selection-start-line="117" selection-start-column="80" selection-end-line="117" selection-end-column="80" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/Lobbie/Lobby.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="54" column="20" selection-start-line="54" selection-start-column="20" selection-end-line="54" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4800#4801#0" expanded="true" />
+            <element signature="e#4832#4833#0" expanded="true" />
+            <element signature="e#4882#4883#0" expanded="true" />
+            <element signature="e#4924#4925#0" expanded="true" />
+            <element signature="e#4959#4960#0" expanded="true" />
+            <element signature="e#4990#4991#0" expanded="true" />
+            <element signature="e#5038#5039#0" expanded="true" />
+            <element signature="e#5078#5079#0" expanded="true" />
+            <element signature="e#5115#5116#0" expanded="true" />
+            <element signature="e#5145#5146#0" expanded="true" />
+            <element signature="e#5191#5192#0" expanded="true" />
+            <element signature="e#5229#5230#0" expanded="true" />
+            <element signature="e#5268#5269#0" expanded="true" />
+            <element signature="e#5302#5303#0" expanded="true" />
+            <element signature="e#5357#5358#0" expanded="true" />
+            <element signature="e#5403#5404#0" expanded="true" />
+            <element signature="e#5440#5441#0" expanded="true" />
+            <element signature="e#5472#5473#0" expanded="true" />
+            <element signature="e#5523#5524#0" expanded="true" />
+            <element signature="e#5565#5566#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/server/Lobbie/LobbiesHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="46" column="181" selection-start-line="46" selection-start-column="181" selection-end-line="46" selection-end-column="181" />
+        <state relative-caret-position="351">
+          <caret line="88" column="65" selection-start-line="88" selection-start-column="65" selection-end-line="88" selection-end-column="65" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#4997#4998#0" expanded="true" />
+            <element signature="e#5048#5049#0" expanded="true" />
+            <element signature="e#5118#5119#0" expanded="true" />
+            <element signature="e#5172#5173#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="112" selection-start-line="112" selection-end-line="112" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#24330#24331#0" expanded="true" />
+            <element signature="e#25510#25687#0" expanded="true" />
+            <element signature="e#25686#25687#0" expanded="true" />
           </folding>
         </state>
       </provider>
